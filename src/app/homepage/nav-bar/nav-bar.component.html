@@ -1,0 +1,157 @@
+<div class="head">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="#">Get the App</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="#">Investor Relations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="#">Add restaurant</a>
+                        </li>
+                        <li class="nav-item">
+                            <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Login">
+                                Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#signup">
+                                Signup</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="content-wrapper text-center">
+        <img src="../../assets/logo.png" class="logo mb-3" alt="logo">
+        <h1 class="h5">Discover the best food & drinks in Delhi NCR</h1>
+        <div class="container mt-5 search-bar">
+            <div class="row">
+                <div class="col-md-12 md-2">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <span class="material-symbols-outlined">
+                                location_on
+                            </span>
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-outline dropdown-toggle" type="button"
+                                id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Select Location
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#" (click)="onDetectLocationClick()">Detect Location</a>
+                                <div *ngIf="userLocation" class="dropdown-item">User Location: {{ userLocation }}</div>
+                              </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search for restaurant, cuisine or a dish">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login Modal -->
+<div class="modal background-content" id="Login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Login</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="onLogin()" class="layout">
+                <div class="form-group mt-3 mb-3 instyle">
+                    <div class="input-group mt-3">
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" class="form-control" id="user" name="user" placeholder="Enter your username"
+                            [(ngModel)]="loginObj.userName" required>
+                    </div>
+                </div>
+                <div class="form-group mt-3 mb-3 instyle">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                        <input type="password" class="form-control" id="loginpassword" name="password"
+                            placeholder="Enter your password" [(ngModel)]="loginObj.password" required>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn text-light bg-danger bt" id="login">Login</button>
+                </div>
+                <div class="text-dark text-center mt-3">
+                    <p>New to Zomato? <a class="nav-link text-danger" data-bs-toggle="modal"
+                            data-bs-target="#signup">Create account</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Signup Modal -->
+<div class="modal background-content" id="signup" tabindex="-1" aria-labelledby="SignupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Signup</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="onSignUP()" class="layout">
+                <div class="instyle">
+                    <div class="form-group mt-3">
+                        <label for="username">Username:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Enter username" [(ngModel)]="signupObj.userName" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="phone">Phone Number:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                            <input type="text" class="form-control" id="phone" name="phone"
+                                placeholder="Enter your phone number" [(ngModel)]="signupObj.phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="email">Email:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email" [(ngModel)]="signupObj.email" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="password">Password:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter your password" [(ngModel)]="signupObj.password" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label" for="terms">I agree to Zomato's <a class="text-success"
+                                href="">Terms of Service</a>& <a class="text-success" href="">Privacy Policy</a></label>
+                    </div>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn text-light bg-danger bt bsAlert">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

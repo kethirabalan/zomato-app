@@ -1,0 +1,110 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../../assets/footerlogo.png" class="logo" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="d-flex ms-auto">
+                <div class="p-2">
+                    <a class="btn btn-outline-info navbtn" data-bs-toggle="modal" data-bs-target="#Login">Log In</a>
+                </div>
+                <div class="p-2">
+                    <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#signup">Signup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal background-content" id="Login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Login</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="onLogin()" class="layout">
+                <div class="form-group mt-3 mb-3 instyle">
+                    <div class="input-group mt-3">
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" class="form-control" id="user" name="user" placeholder="Enter your username"
+                            [(ngModel)]="loginObj.userName" required>
+                    </div>
+                </div>
+                <div class="form-group mt-3 mb-3 instyle">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                        <input type="password" class="form-control" id="loginpassword" name="password"
+                            placeholder="Enter your password" [(ngModel)]="loginObj.password" required>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn text-light bg-danger bt" id="login">Login</button>
+                </div>
+                <div class="text-dark text-center mt-3">
+                    <p>New to Zomato? <a class="nav-link text-danger" data-bs-toggle="modal"
+                            data-bs-target="#signup">Create account</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Signup Modal -->
+<div class="modal background-content" id="signup" tabindex="-1" aria-labelledby="SignupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-dark" id="SignupLabel">Signup</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="onSignUP()" class="layout">
+                <div class="instyle">
+                    <div class="form-group mt-3">
+                        <label for="username">Username:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Enter username" [(ngModel)]="signupObj.userName" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="phone">Phone Number:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                            <input type="text" class="form-control" id="phone" name="phone"
+                                placeholder="Enter your phone number" [(ngModel)]="signupObj.phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="email">Email:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email" [(ngModel)]="signupObj.email" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="password">Password:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter your password" [(ngModel)]="signupObj.password" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label" for="terms">I agree to Zomato's <a class="text-success"
+                                href="">Terms of Service</a>& <a class="text-success" href="">Privacy
+                                Policy</a></label>
+                    </div>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn text-light bg-danger bt bsAlert">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

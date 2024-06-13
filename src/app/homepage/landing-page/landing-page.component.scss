@@ -1,0 +1,114 @@
+// google-font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-outline {
+    border-radius: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.search-bar {
+    width: 600px;
+}
+
+.logo {
+    width: 250px;
+    margin: 3rem 0 2rem !important;
+}
+
+.mobile-app {
+    background-color: #fffbf7;
+    height:430px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.phone {
+    margin-right: 240px;
+}
+
+
+.img-fluid {
+    max-width: 50%;
+    margin-left: 200px;
+}
+
+.file img {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.instyle {
+    margin:10px;
+}
+
+.instyle select {
+    border-radius: 0px;
+}
+
+.instyle input {
+
+    border-radius: 0px;
+}
+
+.bt {
+    border-radius: 0px;
+}
+
+.imgcard {
+   cursor: pointer;
+   width: 950px;
+}
+    
+.modal-backdrop.show {
+    opacity: 1; // Change this to the desired opacity value or remove it to cancel the opacity style completely
+}
+
+.modal {
+    --bs-modal-margin: 1.75rem;
+    --bs-modal-box-shadow: var(--bs-box);
+}
+
+.modal-open .background-content{
+    visibility: hidden; /* Hides the background */
+    opacity: var; /* Optional: Makes the background transparent */
+    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
+    background-color: transparent;
+  }
+
+/* Centering navbar links */
+@media (max-width: 768px) {
+    .custom-toggler {
+        color: white;
+    }
+    .card {
+        margin-left: 15px;
+    }
+    .img-fluid {
+        margin-left: 0px;
+    }
+    .mobileimg {
+        display: none;
+    }
+
+    .imgcard {
+        cursor: pointer;
+        width: auto;
+        margin-left: 20px;
+     }
+
+     .phone {
+        margin-right: auto;
+    }
+}

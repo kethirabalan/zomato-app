@@ -1,0 +1,105 @@
+// google-font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+.head {
+    background: url('/assets/main-bg.png') center/cover no-repeat;
+    height: 400px;
+    color: white;
+}
+
+h1 {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-toggler {
+    background-color: white;
+}
+
+.dropdown-toggle {
+    background-color: #fff;
+}
+
+
+.nav-link {
+    color: #fff;
+}
+
+.nav-link:hover {
+    color: aquamarine;
+}
+
+modal-open .background-content {
+    visibility: hidden; /* Hides the background */
+    opacity: 0; /* Optional: Makes the background transparent */
+    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
+  }
+
+.navbar-nav {
+    margin-left: 5px;
+}
+
+.navbar-nav .nav-item {
+    margin: 10px 50px 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.search-bar {
+    width: 600px;
+}
+
+.logo {
+    width: 250px;
+    margin: 3rem 0 2rem !important;
+}
+
+.phone {
+    margin-right: 240px;
+}
+
+.btn-outline {
+    border-radius: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.layout {
+    margin: 10px;
+}
+
+/* Centering navbar links */
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-bar {
+        width: fit-content;
+    }
+    
+    .custom-toggler {
+        color: white;
+    }
+    .card {
+        margin-left: 15px;
+    }
+    .img-fluid {
+        margin-left: 0px;
+    }
+}

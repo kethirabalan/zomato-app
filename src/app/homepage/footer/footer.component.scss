@@ -1,0 +1,43 @@
+.footer {
+    background-color: #f8f8f8;
+
+
+}
+
+.footer a {
+    text-decoration: none;
+    color: black;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.social-links {
+    color: black;
+}
+
+.social-links :hover {
+    color: #26bbf7;
+}
+
+.container {
+    align-items: center;
+    padding-left: 250px;
+}
+
+
+
+/* Centering navbar links */
+@media (max-width: 768px) {
+    .container {
+        width: fit-content;
+        padding-left: 0px;
+    }
+    .col {
+        margin-top: 5px;
+    }
+    .row {
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,40 @@
+/* General margin styles */
+.head {
+    background-color: #f8f8f8;
+    height: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+p,
+h3 {
+    margin: 20px;
+}
+
+h6 {
+    margin: 10px;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+/* Image styling */
+.img6 {
+    width: 160px;
+    height: 192px;
+    margin-left: 20px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .rounded-circle {
+        width: 80%;
+        margin-left: 20px;
+    }
+
+    .img6 {
+        width: 80px;
+        height: 90px;
+    }
+}
