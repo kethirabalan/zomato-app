@@ -4,6 +4,7 @@ import { FooterComponent } from './homepage/footer/footer.component';
 import { AccordionComponent } from './homepage/accordion/accordion.component';
 import { RestaurantItemsComponent } from './pages/restaurant-items/restaurant-items.component';
 import { NotValidPageComponent } from './homepage/not-valid-page/not-valid-page.component';
+import { MenuComponent } from './pages/menu/menu.component';
 
 export const routes: Routes = [
     {
@@ -22,10 +23,10 @@ export const routes: Routes = [
         path: 'accordion',
         component: AccordionComponent
     },
-    // {
-    //     path: 'food-category',
-    //     component: FoodCategoryComponent
-    // },
+    {
+        path: 'menu',
+        component: MenuComponent
+    },
     {
         path: 'not-valid-page',
         title:'Not Found',
