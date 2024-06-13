@@ -29,7 +29,11 @@ export const routes: Routes = [
     },
     {
         path: 'not-valid-page',
-        title:'Not Found',
+        title:'PageNotFound',
+        component: NotValidPageComponent
+    },
+    {
+        path: '**',
         component: NotValidPageComponent
     },
 
