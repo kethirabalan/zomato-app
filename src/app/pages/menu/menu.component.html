@@ -1,107 +1,32 @@
 <div class="container mt-4">
     <div class="section" id="menu">
-        <div class="container">
-            <ul class="category nav nav-pills mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">All</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Biryani</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Chicken</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pizza</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Burger</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pasta</a>
-                </li>
-            </ul>
-
-            <div class="restaurant-menu row">
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-1.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Oyalo Pizza | California Pizza</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 525.00</div>
-                                <a href="#" class="btn btn-primary" routerLink="/checkout">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <ul class="category nav nav-pills mb-4">
+          <li class="nav-item" *ngFor="let category of categories">
+            <a class="nav-link" 
+               [class.active]="selectedCategory === category" 
+               href="javascript:void(0)" 
+               (click)="selectCategory(category)">
+              {{ category }}
+            </a>
+          </li>
+        </ul>
+  
+        <div class="restaurant-menu row">
+          <div class="menu-item col-md-4 mb-4" *ngFor="let item of filteredMenuItems">
+            <div class="card">
+              <img [src]="item.image" class="card-img-top img-fluid" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.location }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="price">&#8377; {{ item.price.toFixed(2) }}</div>
+                  <a href="#" class="btn btn-primary">Order Now</a>
                 </div>
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-2.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">A1 Parotta Stall | Curry Chicken</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 625.00</div>
-                                <a href="#" class="btn btn-primary">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-3.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Sha Biriyani | Chicken Tikka Masala</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 225.00</div>
-                                <a href="#" class="btn btn-primary">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-4.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Sweet Truth | Fusilli Pasta</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 325.00</div>
-                                <a href="#" class="btn btn-primary">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-5.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Foodweel | Chicken Nuggets</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 525.00</div>
-                                <a href="#" class="btn btn-primary">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../../../assets/menu-6.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Ibaco | Spring Rolls</h5>
-                            <p class="card-text">Tirunelveli</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="price">&#8377; 425.00</div>
-                                <a href="#" class="btn btn-primary">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
