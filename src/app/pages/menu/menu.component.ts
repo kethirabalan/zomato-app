@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterLink,FormsModule,CommonModule],
+  imports: [RouterLink,FormsModule,CommonModule,],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -23,6 +24,8 @@ export class MenuComponent {
     { title: 'Ibaco | Spring Rolls', category: 'Burger', location: 'Tirunelveli', price: 425.00, image: 'assets/menu-6.jpg' }
   ];
 
+  constructor(private sharedService: SharedService, private router: Router) {}
+
   get filteredMenuItems() {
     if (this.selectedCategory === 'All') {
       return this.menuItems;
@@ -31,6 +34,15 @@ export class MenuComponent {
   }
 
   selectCategory(category: string) {
+    console.log(category);
+    
     this.selectedCategory = category;
+  }
+
+  orderNow(item: any) {
+    console.log(item);
+    
+    this.sharedService.setItem(item);
+    this.router.navigate(['/checkout']);
   }
 }

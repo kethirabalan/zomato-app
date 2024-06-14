@@ -21,7 +21,7 @@
                 <p class="card-text">{{ item.location }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="price">&#8377; {{ item.price.toFixed(2) }}</div>
-                  <a href="#" class="btn btn-primary">Order Now</a>
+                  <a class="btn btn-primary" (click)="orderNow(item)">Order Now</a>
                 </div>
               </div>
             </div>

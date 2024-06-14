@@ -1,34 +1,30 @@
 <div class="container">
   <section class="product">
     <div class="product__details">
-      <h1 class="product__details-heading">California Pizza</h1>
-      <!-- {{productname}} -->
-      <span class="product__details-sub-heading">Oyalo Pizza</span>
-      <!-- {{restaurant}} -->
-
+      <h1 class="product__details-heading">{{ item?.title }}</h1>
+      <span class="product__details-sub-heading">{{ item?.location }}</span>
       <div class="product__details-image-wrapper">
-        <img class="product__details-image" src="../../../assets/menu-1.jpg" alt="">
-        <!-- productimage -->
+        <img class="product__details-image" [src]="item?.image" alt="">
       </div>
-
       <div class="product__details-basket">
         <div class="product__details-basket-item">
           <span class="product__details-basket-heading">Quantity</span>
           <div class="product__details-basket-quantity-wrapper">
-            <select class="product__details-basket-quantity" name="quantity" id="quantity" data-product-quantity>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+            <select class="product__details-basket-quantity" name="quantity" id="quantity" data-product-quantity
+              (change)="onQuantityChange($event)">
+              <option *ngFor="let qty of [1, 2, 3, 4, 5]" [value]="qty">{{ qty }} 
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </select>
           </div>
         </div>
 
         <div class="product__details-basket-item">
           <span class="product__details-basket-heading product__details-basket-heading--right">Price</span>
-          <span class="product__details-basket-price" data-product-price>&#8377; 525.00</span>
-          <!-- {{price}} -->
+          <span class="product__details-basket-price" data-product-price>&#8377; {{ totalPrice.toFixed(2) }}</span>
         </div>
       </div>
     </div>
