@@ -1,1 +1,141 @@
-<p>checkout works!</p>
+<div class="container">
+  <section class="product">
+    <div class="product__details">
+      <h1 class="product__details-heading">California Pizza</h1>
+      <!-- {{productname}} -->
+      <span class="product__details-sub-heading">Oyalo Pizza</span>
+      <!-- {{restaurant}} -->
+
+      <div class="product__details-image-wrapper">
+        <img class="product__details-image" src="../../../assets/menu-1.jpg" alt="">
+        <!-- productimage -->
+      </div>
+
+      <div class="product__details-basket">
+        <div class="product__details-basket-item">
+          <span class="product__details-basket-heading">Quantity</span>
+          <div class="product__details-basket-quantity-wrapper">
+            <select class="product__details-basket-quantity" name="quantity" id="quantity" data-product-quantity>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="product__details-basket-item">
+          <span class="product__details-basket-heading product__details-basket-heading--right">Price</span>
+          <span class="product__details-basket-price" data-product-price>&#8377; 525.00</span>
+          <!-- {{price}} -->
+        </div>
+      </div>
+    </div>
+
+    <form class="card-details" action="" data-form>
+      <fieldset class="card-details__fieldset">
+        <span class="card-details__heading">Card Type</span>
+
+        <div class="card-details__cards" data-card-types>
+          <div class="card-details__cards-item">
+            <input class="card-details__card-input" onclick="" type="radio" name="cardType" id="visa"
+              data-card-type="visa" checked>
+            <label class="card-details__card-label" for="visa">Visa</label>
+            <img class="card-details__cards-image" src="https://svgshare.com/i/7h2.svg" alt="Visa Card"
+              aria-hidden="true">
+          </div>
+
+          <div class="card-details__cards-item">
+            <input class="card-details__card-input" onclick="" type="radio" name="cardType" id="mastercard"
+              data-card-type="mastercard">
+            <label class="card-details__card-label" for="mastercard">MasterCard</label>
+            <img class="card-details__cards-image" src="../../../assets/mastercard.svg" alt="MasterCard"
+              aria-hidden="true">
+          </div>
+
+          <div class="card-details__cards-item">
+            <input class="card-details__card-input" onclick="" type="radio" name="cardType" id="discover"
+              data-card-type="discover">
+            <label class="card-details__card-label" for="discover">Discover</label>
+            <img class="card-details__cards-image" src="../../../assets/discover.svg" alt="Discover Card"
+              aria-hidden="true">
+          </div>
+
+          <div class="card-details__cards-item">
+            <input class="card-details__card-input" onclick="" type="radio" name="cardType" id="express"
+              data-card-type="express">
+            <label class="card-details__card-label" for="express">American Express</label>
+            <img class="card-details__cards-image" src="../../../assets/diners.svg" alt="Diners" aria-hidden="true">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="card-details__fieldset">
+        <span class="card-details__heading">Card Number</span>
+
+        <div class="card-details__number">
+          <div class="card-details__number-field">
+            <label for="cardNumberFirstFour" class="card-details__number-label">First Four Digits</label>
+            <input class="card-details__number-input" type="text" maxlength="4" name="card-number" placeholder="0000"
+              id="cardNumberFirstFour" data-input>
+          </div>
+
+          <div class="card-details__number-field">
+            <label for="cardNumberSecondFour" class="card-details__number-label">Second Four Digits</label>
+            <input class="card-details__number-input" type="text" maxlength="4" name="card-number" placeholder="0000"
+              id="cardNumberSecondFour" data-input>
+          </div>
+
+          <div class="card-details__number-field">
+            <label for="cardNumberThirdFour" class="card-details__number-label">Third Four Digits</label>
+            <input class="card-details__number-input" type="text" maxlength="4" name="card-number" placeholder="0000"
+              id="cardNumberThirdFour" data-input>
+          </div>
+
+          <div class="card-details__number-field">
+            <label for="cardNumberFirstFour" class="card-details__number-label">Last Four Digits</label>
+            <input class="card-details__number-input" type="text" maxlength="4" name="card-number" placeholder="0000"
+              id="cardNumberLastFour" data-input>
+          </div>
+
+          <div class="card-details__number-card">
+            <img class="card-details__number-card-image" src="../../../assets/icons8-magnetic-card-100.png" alt="Card"
+              data-card-image>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="card-details__fieldset">
+        <span class="card-details__heading" aria-hidden="true">Card Holder Name</span>
+        <div class="card-details__holder">
+          <label class="card-details__holder-label" for="cardHolderName">Card Holder Name</label>
+          <input class="card-details__holder-input" type="text" id="cardHolderName" data-input>
+        </div>
+      </fieldset>
+
+      <fieldset class="card-details__fieldset">
+        <div class="card-details__expiration">
+          <span class="card-details__heading" aria-hidden="true">Expiration Date</span>
+          <div class="card-details__expiration-date">
+            <label class="card-details__expiration-date-label" for="expirationDate">Expiration Date</label>
+            <input class="card-details__expiration-date-input" type="text" maxlength="7" placeholder="MM/YY"
+              id="expirationDate" data-input>
+          </div>
+        </div>
+
+        <div class="card-details__security">
+          <span class="card-details__heading" aria-hidden="true">CVV</span>
+          <div class="card-details__details__security-code">
+            <label class="card-details__security-code-label" for="expirationDate">CVV</label>
+            <input class="card-details__security-code-input" type="text" maxlength="3" placeholder="000"
+              id="expirationDate" data-input>
+          </div>
+        </div>
+      </fieldset>
+
+      <button class="card-details__submit" routerLink="/thankyou" type="button" data-submit-button>Purchase</button>
+    </form>
+  </section>
+
+</div>

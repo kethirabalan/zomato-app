@@ -1,6 +1,8 @@
 // google-font
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+$back-drop: 0;
+
 .head {
     background: url('/assets/main-bg.png') center/cover no-repeat;
     height: 400px;
@@ -31,12 +33,6 @@ h1 {
 .nav-link:hover {
     color: aquamarine;
 }
-
-modal-open .background-content {
-    visibility: hidden; /* Hides the background */
-    opacity: 0; /* Optional: Makes the background transparent */
-    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
-  }
 
 .navbar-nav {
     margin-left: 5px;
@@ -80,6 +76,8 @@ a {
 .layout {
     margin: 10px;
 }
+
+
 
 /* Centering navbar links */
 @media (max-width: 768px) {

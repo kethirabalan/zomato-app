@@ -5,6 +5,8 @@ import { AccordionComponent } from './homepage/accordion/accordion.component';
 import { RestaurantItemsComponent } from './pages/restaurant-items/restaurant-items.component';
 import { NotValidPageComponent } from './homepage/not-valid-page/not-valid-page.component';
 import { MenuComponent } from './pages/menu/menu.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { ThankyouComponent } from './pages/thankyou/thankyou.component';
 
 export const routes: Routes = [
     {
@@ -26,6 +28,15 @@ export const routes: Routes = [
     {
         path: 'menu',
         component: MenuComponent
+    },
+    {
+        path: 'checkout',
+        component: CheckoutComponent
+    },
+    {
+        path: 'thankyou',
+        title:'paymentstatus',
+        component: ThankyouComponent
     },
     {
         path: 'not-valid-page',
