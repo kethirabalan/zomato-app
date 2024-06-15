@@ -1,8 +1,6 @@
 // google-font
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-$back-drop: 0;
-
 .head {
     background: url('/assets/main-bg.png') center/cover no-repeat;
     height: 400px;
@@ -35,7 +33,7 @@ h1 {
 }
 
 .navbar-nav {
-    margin-left: 5px;
+    margin-left: 295px
 }
 
 .navbar-nav .nav-item {
@@ -77,6 +75,35 @@ a {
     margin: 10px;
 }
 
+.offcanvas{
+    width: max-content;
+    background: transparent;
+}
+
+.offcanvas-title{
+    color: white;
+}
+
+.modal background-content show{
+    background: none;
+}
+
+.modal-backdrop.show {
+    opacity: 0; // Change this to the desired opacity value or remove it to cancel the opacity style completely
+    color: #ffcc00;
+}
+
+.modal {
+    --bs-modal-margin: 1.75rem;
+}
+
+.modal-open .background-content{
+    visibility: hidden; /* Hides the background */
+    opacity: var; /* Optional: Makes the background transparent */
+    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
+    background-color: transparent;
+  }
+
 
 
 /* Centering navbar links */
@@ -85,6 +112,38 @@ a {
         margin: 0 auto;
         display: flex;
         justify-content: center;
+    }
+
+    .offcanvas {
+        width: max-content;        
+        background: transparent;   
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(5px); 
+        position: fixed;          
+        top: 0;                   
+        left: 0;                   
+        height: 100vh;             
+        overflow-y: auto;          
+        padding: 1rem;             
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); 
+        transition: left 0.3s ease;
+    }
+    
+    /* Optional: Style for the navbar links */
+    .offcanvas a {
+        color: #ffffff;                /* Sets the text color of links */
+        text-decoration: none;      /* Removes underline from links */
+        display: block;             /* Makes the links block-level elements */
+        padding: 0.5rem 0;          /* Adds padding around the links */
+    }
+    
+    /* Optional: Hover effect for the links */
+    .offcanvas a:hover {
+        color: #ffcc00;             /* Changes the color on hover */
+    }
+
+    .btn-close {
+        background-color: bisque
     }
 
     .search-bar {

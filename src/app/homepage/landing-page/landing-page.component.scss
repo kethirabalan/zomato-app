@@ -71,21 +71,6 @@ a {
    width: 950px;
 }
     
-.modal-backdrop.show {
-    opacity: 1; // Change this to the desired opacity value or remove it to cancel the opacity style completely
-}
-
-.modal {
-    --bs-modal-margin: 1.75rem;
-    --bs-modal-box-shadow: var(--bs-box);
-}
-
-.modal-open .background-content{
-    visibility: hidden; /* Hides the background */
-    opacity: var; /* Optional: Makes the background transparent */
-    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
-    background-color: transparent;
-  }
 
 /* Centering navbar links */
 @media (max-width: 768px) {
@@ -100,6 +85,10 @@ a {
     }
     .mobileimg {
         display: none;
+    }
+
+    .cardview{
+      align-items: center;
     }
 
     .imgcard {

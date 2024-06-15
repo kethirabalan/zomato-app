@@ -5,8 +5,8 @@ import { RouterLink } from '@angular/router';
   selector: 'app-thankyou',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './thankyou.component.html',
-  styleUrl: './thankyou.component.scss'
+  templateUrl: './thankpage.component.html',
+  styleUrl: './thankpage.component.scss'
 })
 export class ThankyouComponent {
 
