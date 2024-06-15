@@ -13,6 +13,7 @@ body {
 
 .category {
     margin-bottom: 20px;
+    gap: 7px;
 
     .nav-link {
         color: $primary-color;
@@ -25,6 +26,7 @@ body {
     .nav-link.active {
         background-color: $primary-color;
         color: #fff;
+        margin-left: 14px;
     }
 }
 
