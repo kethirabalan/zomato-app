@@ -1,0 +1,76 @@
+.img-fluid {
+    border-radius: 15px;
+    margin-top: 50px;
+}
+
+.formlist {
+    margin-top: 50px;
+}
+
+.card-img-top{
+    size: 10px;
+}
+
+.hero-text{
+    text-align: center;
+}
+
+.futuretext{
+    margin-bottom: 50px;
+}
+
+.card-img{
+    width: 70px;
+    padding: 10px;
+    border-radius: 250px;
+    background-color: antiquewhite;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.card{
+    width: 300px;
+    text-align: center;
+    align-items: center;
+}
+
+.textwrap{
+    margin-left: 280px;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+@media screen and (max-width: 600px) {
+
+    .img-fluid {
+        border-radius: 15px;
+        margin-top: 0px;
+    }
+
+
+    .textwrap{
+        margin-left: 50px;
+    }
+
+    .card{
+        width: 250px;
+        text-align: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .work{
+        margin-top: 10px;
+    }
+
+    .formlist {
+        margin-top: 50px;
+        margin-left: 10px;
+        width: 340px;
+    }
+}
+
+
