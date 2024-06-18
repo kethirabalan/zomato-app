@@ -13,11 +13,6 @@
             <select class="product__details-basket-quantity" name="quantity" id="quantity" data-product-quantity
               (change)="onQuantityChange($event)">
               <option *ngFor="let qty of [1, 2, 3, 4, 5]" [value]="qty">{{ qty }} 
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
             </select>
           </div>
         </div>

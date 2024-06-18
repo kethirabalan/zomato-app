@@ -12,6 +12,31 @@ $link-color: $white;
 $border-color: rgba(255, 255, 255, 0.3);
 $input-border-radius: 0;
 
+// Custom Mixin
+@mixin input($align: null) {
+  width: 100%;
+  padding-bottom: 5px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid $border-color;
+  border-radius: 0;
+  color: $border-color;
+  font-size: 1em;
+  transition: all 0.25s ease-in-out;
+  appearance: none;
+
+  @if $align == 'centerText' {
+    text-align: center;
+  }
+
+  &:focus,
+  &:active,
+  &--valid {
+    color: $white;
+    border-bottom-color: $rose-pink-dark;
+  }
+}
+
 // Global Styles
 *, *:before, *:after {
   box-sizing: border-box;
@@ -25,8 +50,6 @@ body {
   letter-spacing: 0.03em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  background: $body-bg;
-  color: $body-color;
 }
 
 p, a {
@@ -43,21 +66,17 @@ select, input, button {
   letter-spacing: 0.05em;
 }
 
-button {
-  letter-spacing: 0.03em;
-}
-
 // Container Styling
 .container {
   position: relative;
   height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 // Product Styling
@@ -76,12 +95,18 @@ button {
 .product__details-heading {
   margin: 0 0 5px;
   font-weight: bold;
+  padding: 10px;
+  font-size: 25px;
+
+  
 }
 
 .product__details-sub-heading {
-  margin-bottom: 20px;
+  display: block;
+  margin-bottom: 10px;
   font-size: 1.4em;
-  font-weight: bold;
+  padding: 10px;
+
 }
 
 .product__details-image {
@@ -93,21 +118,28 @@ button {
 // Card Details Styling
 .card-details {
   position: relative;
-  padding: 25px;
-  background: linear-gradient(to right, $navy-blue 0%, #00324e 100%);
+  padding: 25px 30px 25px 25px;
+  background: linear-gradient(to right, $navy-blue 0%, darken($navy-blue, 10%) 100%);
   color: $white;
-  padding-left: 30px;
 }
 
 .card-details__fieldset {
-  margin: 0;
+  margin: 0 0 30px;
   padding: 0;
   border: none;
 }
 
 .card-details__heading {
+  display: block;
   font-size: 0.95em;
   font-weight: bold;
+}
+
+.card-details__cards {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .card-details__cards-item {
@@ -118,23 +150,27 @@ button {
   overflow: hidden;
 }
 
-.card-details__card-label,
-.card-details__number-label,
-.card-details__expiration-date-label,
-.card-details__security-code-label {
+.card-details__card-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  z-index: 1;
+}
+
+.card-details__card-label {
   position: absolute;
   top: 0;
   left: 0;
   width: 0;
   height: 0;
   text-indent: -9999px;
-}
-
-.card-details__card-input,
-.card-details__number-input,
-.card-details__expiration-date-input,
-.card-details__security-code-input {
-  @include input('centerText');
+  z-index: 0;
 }
 
 .card-details__cards-image {
@@ -150,23 +186,69 @@ button {
   }
 }
 
-.card-details__number,
+.card-details__number {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 15px;
+}
+
+.card-details__number-field,
+.card-details__number-card {
+  position: relative;
+  width: 15%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.card-details__number-card {
+  width: 14%;
+  margin-left: 10px;
+}
+
+.card-details__number-label,
+.card-details__holder-label,
+.card-details__expiration-date-label,
+.card-details__security-code-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  text-indent: -9999px;
+  clip: rect(0, 0, 0, 0);
+}
+
+.card-details__number-input,
+.card-details__expiration-date-input,
+.card-details__security-code-input {
+  @include input('centerText');
+}
+
+.card-details__holder {
+  position: relative;
+  margin-top: 10px;
+
+  &-input {
+    @include input;
+  }
+}
+
 .card-details__expiration,
 .card-details__security {
   display: inline-block;
   vertical-align: middle;
 }
 
-.card-details__number-field {
-  position: relative;
-  width: 15%;
+.card-details__expiration {
+  margin-right: 50px;
 }
 
-.card-details__number-card {
-  width: 14%;
-  margin-left: 10px;
-  border-radius: 5px;
-  overflow: hidden;
+.card-details__expiration-date,
+.card-details__security-code {
+  position: relative;
+  max-width: 66px;
+  margin-top: 15px;
 }
 
 .card-details__submit {
@@ -183,18 +265,20 @@ button {
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+  appearance: none;
 }
 
 // Product Basket Styling
 .product__details-basket {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-evenly;
   margin-top: 25px;
 }
 
 .product__details-basket-heading {
+  display: block;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba($white, 0.7);
   font-size: 0.95em;
 
   &--right {
@@ -205,31 +289,38 @@ button {
 .product__details-basket-quantity-wrapper {
   position: relative;
   background-color: $navy-blue;
+  
 
   &:before {
     content: '\203A';
     position: absolute;
     top: 50%;
     right: 6px;
-    color: rgba(255, 255, 255, 0.7);
+    font-family: $font-family-base;
+    color: rgba($white, 0.7);
     font-size: 1.8em;
     transform: rotate(90deg) translateY(-50%);
     transform-origin: top;
-    font-family: $font-family-base;
   }
 }
 
 .product__details-basket-quantity {
+  display: block;
+  position: relative;
   width: 100%;
   background-color: transparent;
   margin: 0;
   padding: 6px 12px;
   border: none;
   color: $white;
+  background-color: #013552;
   font-size: 1em;
+  appearance: none;
+  z-index: 1;
 }
 
 .product__details-basket-price {
+  display: block;
   color: $rose-pink-dark;
   font-size: 1.3em;
   font-weight: bold;
@@ -242,16 +333,16 @@ button {
   }
 
   .container {
-    padding: 0%;
+    padding: 0;
   }
 
   .product {
-    margin-top: 0px;
-    padding: 0px;
+    margin-top: 0;
+    padding: 0;
   }
 
   .card-details {
-    padding: 25px 50px 35px;
+    padding: 0 50px 35px;
   }
 
   .card-details__holder {
@@ -259,7 +350,7 @@ button {
   }
 }
 
-@media screen and (min-width: 47.938em) {
+@media screen and (min-width: 768px) {
   .product {
     display: flex;
     justify-content: space-between;
@@ -269,10 +360,9 @@ button {
 
   .product__details {
     position: relative;
-    padding: 40px;
+    padding: 40px 0;
     flex: 1;
-    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.35);
-    z-index: 1;
+    box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.35);
     border-radius: 10px;
   }
 
@@ -294,12 +384,11 @@ button {
     height: 100%;
     transform: rotate(-1deg) translate(-50%, -50%);
     transform-origin: 50%;
-    z-index: 1;
   }
 
   .card-details {
     max-width: 450px;
-    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.35);
     border-radius: 0 10px 10px 0;
   }
 
@@ -308,7 +397,7 @@ button {
     right: 20px;
     bottom: -25px;
     width: auto;
-    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.35);
   }
 
   .card-details__fieldset:last-of-type {

@@ -2,12 +2,13 @@ import { Component , OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [RouterLink,FormsModule],
+  imports: [RouterLink,FormsModule,CommonModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })
