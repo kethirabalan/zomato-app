@@ -97,8 +97,6 @@ select, input, button {
   font-weight: bold;
   padding: 10px;
   font-size: 25px;
-
-  
 }
 
 .product__details-sub-heading {
@@ -106,7 +104,6 @@ select, input, button {
   margin-bottom: 10px;
   font-size: 1.4em;
   padding: 10px;
-
 }
 
 .product__details-image {
@@ -225,10 +222,10 @@ select, input, button {
   @include input('centerText');
 }
 
-
-.card-details__security-code-input{
+.card-details__security-code-input {
   width: 50px;
 }
+
 .card-details__holder {
   position: relative;
   margin-top: 10px;
@@ -275,7 +272,7 @@ select, input, button {
 // Product Basket Styling
 .product__details-basket {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   margin-top: 25px;
 }
 
@@ -293,7 +290,6 @@ select, input, button {
 .product__details-basket-quantity-wrapper {
   position: relative;
   background-color: $navy-blue;
-  
 
   &:before {
     content: '\203A';
@@ -317,7 +313,7 @@ select, input, button {
   padding: 6px 12px;
   border: none;
   color: $white;
-  background-color: #013552;
+  background-color: $navy-blue;
   font-size: 1em;
   appearance: none;
   z-index: 1;
@@ -367,7 +363,7 @@ select, input, button {
     padding: 44px 0;
     flex: 1;
     box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.35);
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0 0 10px;
   }
 
   .product__details-sub-heading {

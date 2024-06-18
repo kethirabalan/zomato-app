@@ -7,6 +7,7 @@ import { NotValidPageComponent } from './homepage/not-valid-page/not-valid-page.
 import { MenuComponent } from './pages/menu/menu.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ThankyouComponent } from './pages/thankpage/thankpage.component';
+import { AddRestaurantComponent } from './pages/add-restaurant/add-restaurant.component';
 
 export const routes: Routes = [
     {
@@ -16,6 +17,10 @@ export const routes: Routes = [
     {
         path: 'restaurant',
         component: RestaurantItemsComponent
+    },
+    {
+        path: 'add-restaurant',
+        component: AddRestaurantComponent
     },
     {
         path: 'footer',
