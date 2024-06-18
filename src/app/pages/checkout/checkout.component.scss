@@ -225,6 +225,10 @@ select, input, button {
   @include input('centerText');
 }
 
+
+.card-details__security-code-input{
+  width: 50px;
+}
 .card-details__holder {
   position: relative;
   margin-top: 10px;
@@ -248,7 +252,7 @@ select, input, button {
 .card-details__security-code {
   position: relative;
   max-width: 66px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .card-details__submit {
@@ -271,7 +275,7 @@ select, input, button {
 // Product Basket Styling
 .product__details-basket {
   display: flex;
-  justify-content:space-evenly;
+  justify-content:space-around;
   margin-top: 25px;
 }
 
@@ -360,10 +364,10 @@ select, input, button {
 
   .product__details {
     position: relative;
-    padding: 40px 0;
+    padding: 44px 0;
     flex: 1;
     box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.35);
-    border-radius: 10px;
+    border-radius: 10px 0px 0px 10px;
   }
 
   .product__details-sub-heading {

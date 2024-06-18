@@ -35,7 +35,6 @@ export const routes: Routes = [
     },
     {
         path: 'thankyou',
-        title:'paymentstatus',
         component: ThankyouComponent
     },
     {

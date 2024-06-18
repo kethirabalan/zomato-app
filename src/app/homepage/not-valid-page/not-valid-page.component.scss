@@ -7,6 +7,7 @@
     background: #fff;
     font-family: "Arvo", serif;
     margin-top: 50px;
+    margin-left: 250px;
   }
   
   .page_404 img {
@@ -38,4 +39,15 @@
   .contant_box_404 {
     margin-top: -50px;
   }
+
+@media screen and (max-width: 600px) {
+
+
+  .page_404 {
+   margin-left: 0px;
+   padding: 40px 0;
+  }
+
+}
+
   
