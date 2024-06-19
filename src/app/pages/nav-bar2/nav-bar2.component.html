@@ -1,17 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<div class="head">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <a class="navbar-brand" href="#">
         <img src="../../assets/footerlogo.png" class="logo" alt="logo">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+        aria-controls="offcanvasExample" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Zomato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
         <div class="d-flex ms-auto">
           <div class="user" *ngIf="isLoggedIn">
-            Welcome, {{ username }}!
-            <a (click)="logout()"><img class="logout" src="../../../assets/log-out.png" alt="logout"></a>
+            Welcome , {{ username }}!
+            <div class="btn-group">
+              <div type="click" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="profileimg dropdown-toggle" src="../../../assets/user.avif" alt="User Image">
+              </div>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#editProfile"><img class="imagelist"
+                  src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a></li>
+                <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
+                      src="../../../assets/log-out.png" alt="logout"> Logout</a></li>
+              </ul>
+            </div>
           </div>
           <div *ngIf="!isLoggedIn">
             <!-- Add login link or other content here -->
@@ -20,4 +36,3 @@
       </div>
     </div>
   </nav>
-  

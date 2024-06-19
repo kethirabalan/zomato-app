@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-nav-bar2',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,],
   templateUrl: './nav-bar2.component.html',
   styleUrls: ['./nav-bar2.component.scss']
 })
@@ -32,6 +32,6 @@ export class NavBar2Component implements OnInit {
     this.authService.logout();
     this.username = null;
     this.isLoggedIn = false;
-    this.router.navigate(['/login']); // Redirect to login page after logout
+    this.router.navigate(['/']); // Redirect to login page after logout
   }
 }
