@@ -17,11 +17,12 @@
             <div class="card">
               <img [src]="item.image" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
-                <h5 class="card-title">{{ item.title }}</h5>
+                <h4 class="card-title text-success">{{ item.title }}</h4>
+                <h6 class="text">{{ item.shop }}</h6>
                 <p class="card-text">{{ item.location }}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="price">&#8377; {{ item.price.toFixed(2) }}</div>
-                  <a class="btn btn-primary" (click)="orderNow(item)">Order Now</a>
+                  <div class="price"> {{ item.price.toFixed(2) | currency:'INR' }}</div>
+                  <a class="btn btn-primary" (click)="addtocart(item)">Add to cart</a>
                 </div>
               </div>
             </div>

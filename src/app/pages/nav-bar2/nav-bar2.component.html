@@ -9,28 +9,29 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-                aria-labelledby="offcanvasExampleLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Zomato</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
+        aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Zomato</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
         <div class="d-flex ms-auto">
           <div class="user" *ngIf="isLoggedIn">
-            <!-- Welcome , {{ username }}! -->
             <div class="btn-group">
-              <!-- <div type="click" data-bs-toggle="dropdown" aria-expanded="false"> -->
-                <img class="profileimg" [src]="profileImgSrc" alt="User Image">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ username }}
-                </button>                
-              <!-- </div> -->
+              <img class="profileimg" [src]="profileImgSrc" alt="User Image">
+              <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ username }}
+              </button>
               <ul class="dropdown-menu">
                 <div>
-                <li><a class="dropdown-item" href="#editProfile"  data-bs-toggle="modal" data-bs-target="#editProfileModal" (click)="editprofile()">\
-                  <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a></li>
+                  <li><a class="dropdown-item" href="#editProfile" data-bs-toggle="modal"
+                      data-bs-target="#editProfileModal" (click)="editprofile()">
+                      <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a>
+                  </li>
                 </div>
+                <li><a class="dropdown-item" routerlink="/checkout"><img class="logout" src="../../../assets/cart.png"
+                      data-bs-dismiss="editProfileModal" alt="logout"> checkout</a></li>
                 <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
-                      src="../../../assets/log-out.png" alt="logout"> Logout</a></li>
+                      src="../../../assets/log-out.png" data-bs-dismiss="editProfileModal" alt="logout"> Logout</a></li>
               </ul>
             </div>
           </div>
@@ -48,7 +49,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-pencil-square p-2"></i>Edit Profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -58,7 +59,7 @@
             <input class="form-control" type="file" id="profileImage" (change)="onFileSelected($event)">
           </div>
           <!-- Add other profile fields here if needed -->
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Save changes</button>
         </form>
       </div>
     </div>

@@ -4,13 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SharedService {
-  private selectedItem: any;
+  private readonly CART_KEY = 'cartItems';
 
-  setItem(item: any) {
-    this.selectedItem = item;
+  setItem(item: any): void {
+    let cartItems = this.getCartItems();
+    cartItems.push(item);
+    this.saveCartItems(cartItems);
   }
 
-  getItem() {
-    return this.selectedItem;
+  getCartItems(): any[] {
+    const cartItems = localStorage.getItem(this.CART_KEY);
+    return cartItems ? JSON.parse(cartItems) : [];
+  }
+
+  clearCart(): void {
+    localStorage.removeItem(this.CART_KEY);
+  }
+
+  private saveCartItems(items: any[]): void {
+    localStorage.setItem(this.CART_KEY, JSON.stringify(items));
   }
 }

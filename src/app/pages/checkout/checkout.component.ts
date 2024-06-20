@@ -1,31 +1,58 @@
-import { Component , OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [RouterLink,FormsModule,CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.scss'
+  styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
   item: any;
   quantity: number = 1;
   totalPrice: number = 0;
+  promoCode: string = '';
+  promoCodeApplied: boolean = false;
+  promoDiscount: number = 0;
+  cartItems: any[] = [];
+
+  validPromoCodes: { [key: string]: number } = {
+    'EXAMPLECODE': 5,
+    'DISCOUNT10': 10,
+    'SAVE15': 15
+  };
 
   constructor(private sharedService: SharedService) {}
 
   ngOnInit(): void {
-    this.item = this.sharedService.getItem();
-    this.totalPrice = this.item?.price;
+    this.loadCartItems();
+    this.calculateTotalPrice();
   }
 
-  onQuantityChange(event: any): void {
-    this.quantity = event.target.value;
-    this.totalPrice = this.item.price * this.quantity;
+  loadCartItems(): void {
+    this.cartItems = this.sharedService.getCartItems();
+  }
+
+  calculateTotalPrice(): void {
+    this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price, 0);
+    if (this.promoCodeApplied) {
+      this.applyPromoCode();
+    }
+  }
+
+  applyPromoCode(): void {
+    if (this.validPromoCodes.hasOwnProperty(this.promoCode)) {
+      this.promoCodeApplied = true;
+      this.promoDiscount = this.validPromoCodes[this.promoCode];
+      this.totalPrice -= this.promoDiscount;
+    } else {
+      this.promoCodeApplied = false;
+      this.promoDiscount = 0;
+      this.calculateTotalPrice();
+    }
   }
 }
