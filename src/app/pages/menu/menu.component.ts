@@ -39,6 +39,5 @@ export class MenuComponent {
 
   addtocart(item: any) {
     this.sharedService.setItem(item);
-    this.router.navigate(['/checkout']);
   }
 }
