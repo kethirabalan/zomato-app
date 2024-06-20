@@ -15,6 +15,7 @@ export class AuthService {
 
   signUp(user: any): boolean {
     if (this.isValidSignUp(user)) {
+      user.profileImage = '../../../assets/user.avif'; // Set default profile image for new users
       this.signupUsers.push(user);
       this.setLocalStorageItem('signupUsers', JSON.stringify(this.signupUsers));
       alert('Account created successfully');
@@ -47,18 +48,30 @@ export class AuthService {
     return this.getLocalStorageItem('username');
   }
 
+  getProfileImage(): string | null {
+    const username = this.getLoggedInUser();
+    if (username) {
+      const user = this.signupUsers.find(u => u.userName === username);
+      return user?.profileImage || '../../../assets/user.avif'; // Default image if not set
+    }
+    return '../../../assets/user.avif'; // Default image for new users or if no user is logged in
+  }
+
+  setProfileImage(image: string): void {
+    const username = this.getLoggedInUser();
+    if (username) {
+      const user = this.signupUsers.find(u => u.userName === username);
+      if (user) {
+        user.profileImage = image;
+        this.setLocalStorageItem('signupUsers', JSON.stringify(this.signupUsers));
+      }
+    }
+  }
+
   logout(): void {
     this.loggedInUser = null;
     this.removeLocalStorageItem('username');
     this.router.navigate(['/']);
-  }
-
-  getProfileImage(): string | null {
-    return this.getLocalStorageItem('profileImage');
-  }
-
-  setProfileImage(image: string): void {
-    this.setLocalStorageItem('profileImage', image);
   }
 
   private isValidSignUp(user: any): boolean {
@@ -76,12 +89,12 @@ export class AuthService {
   }
 
   private isValidPhone(phone: any): boolean {
-    const phoneRegex = /^\d{10}$/; //  10 digit phone number
+    const phoneRegex = /^\d{10}$/; // 10 digit phone number
     return phoneRegex.test(phone);
   }
 
   private isValidPassword(password: any): boolean {
-    return password.length >= 8; //  Password should be at least 8 characters long
+    return password.length >= 8; // Password should be at least 8 characters long
   }
 
   private getLocalStorageItem(key: string): string | null {
