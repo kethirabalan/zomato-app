@@ -53,6 +53,14 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  getProfileImage(): string | null {
+    return this.getLocalStorageItem('profileImage');
+  }
+
+  setProfileImage(image: string): void {
+    this.setLocalStorageItem('profileImage', image);
+  }
+
   private isValidSignUp(user: any): boolean {
     return (
       user.userName &&

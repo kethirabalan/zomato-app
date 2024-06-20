@@ -19,11 +19,13 @@
             Welcome , {{ username }}!
             <div class="btn-group">
               <div type="click" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="profileimg dropdown-toggle" src="../../../assets/user.avif" alt="User Image">
+                <img class="profileimg dropdown-toggle" [src]="profileImgSrc" alt="User Image">
               </div>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#editProfile"><img class="imagelist"
+                <div>
+                <li><a class="dropdown-item" href="#editProfile"  data-bs-toggle="modal" data-bs-target="#editProfileModal" (click)="editprofile()"><img class="imagelist"
                   src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a></li>
+                </div>
                 <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
                       src="../../../assets/log-out.png" alt="logout"> Logout</a></li>
               </ul>
@@ -36,3 +38,26 @@
       </div>
     </div>
   </nav>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateProfile()">
+          <div class="mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input class="form-control" type="file" id="profileImage" (change)="onFileSelected($event)">
+          </div>
+          <!-- Add other profile fields here if needed -->
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
