@@ -1,8 +1,12 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
+import { provideClientHydration } from '@angular/platform-browser';
+import { initializeApp, provideFirebaseApp, } from '@angular/fire/app';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient,withFetch } from '@angular/common/http';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 
 
 const firebaseConfig = {
@@ -18,10 +22,9 @@ const firebaseConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withFetch()),
-    importProvidersFrom([
-      // provideFirebaseapp(() => initializeapp(firebaseConfig)),
-      // provideAuth(() => getAuth())
-    ]),
+    provideHttpClient(withFetch()), // Add withFetch() here
+    provideClientHydration(),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)), // Initialize Firebase app once
+    provideAuth(() => getAuth())
   ],
 };

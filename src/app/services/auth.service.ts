@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth} from '@angular/fire/auth';
+import { signInWithPopup } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +11,7 @@ export class AuthService {
   signupUsers: any[];
   loggedInUser: any = null;
 
-  constructor(private router: Router) {
+  constructor(private fireauth : Auth, private router: Router) {
     const localdata = this.getLocalStorageItem('signupUsers');
     this.signupUsers = localdata ? JSON.parse(localdata) : [];
   }
@@ -114,5 +117,9 @@ export class AuthService {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.removeItem(key);
     }
+  }
+  googleSignIn() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.fireauth,provider)
   }
 }

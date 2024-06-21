@@ -8,7 +8,7 @@
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
                 aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Zomato</h5>
+                    <h5 class="title" id="offcanvasExampleLabel">Zomato</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -91,6 +91,20 @@
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn text-light bg-danger bt" data-bs-dismiss="modal" id="login">Login</button>
+                </div>
+                <div class="line-container mt-2">
+                    <div class="line"></div>
+                    <div class="line-text">OR</div>
+                    <div class="line"></div>
+                </div>
+                <div class="g-form mt-2">
+                    <div (click)="signInWithGoogle()" style="text-decoration: none;cursor: pointer;">
+                        <div class="card text-center">
+                            <a class="card-body g-body">
+                                <img src="../../../assets/google-icon.png" alt="" class="google"> Sign In with Google
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="text-dark text-center mt-3">
                     <p>New to Zomato? <a class="nav-link text-danger" data-bs-toggle="modal"

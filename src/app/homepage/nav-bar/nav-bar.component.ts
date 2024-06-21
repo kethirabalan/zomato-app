@@ -79,4 +79,9 @@ export class NavBarComponent implements OnInit {
       // Handle successful login actions if needed
     }
   }
-}
+
+  signInWithGoogle() {
+    this.authService.googleSignIn();
+  }
+ 
+}  

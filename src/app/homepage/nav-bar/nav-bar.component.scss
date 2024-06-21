@@ -75,22 +75,22 @@ a {
     margin: 10px;
 }
 
-.offcanvas{
+.offcanvas {
     width: max-content;
     background: transparent;
+
+    .title {
+        color: white;
+    }
 }
 
-.offcanvas-title{
-    color: white;
-}
-
-.onelogo{
+.onelogo {
     width: 70px;
     height: 70px;
     border-radius: 50px;
 }
 
-.modal background-content show{
+.modal background-content show {
     background: none;
 }
 
@@ -103,13 +103,42 @@ a {
     --bs-modal-margin: 1.75rem;
 }
 
-.modal-open .background-content{
-    visibility: hidden; /* Hides the background */
-    opacity: var; /* Optional: Makes the background transparent */
-    transition: visibility 0s, opacity 0.5s linear; /* Adds transition for smooth effect */
+.modal-open .background-content {
+    visibility: hidden;
+    /* Hides the background */
+    opacity: var;
+    /* Optional: Makes the background transparent */
+    transition: visibility 0s, opacity 0.5s linear;
+    /* Adds transition for smooth effect */
     background-color: transparent;
-  }
+}
 
+.google {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+}
+
+.g-body {
+    padding: 5px;
+}
+
+.line-container {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.line {
+    flex: 1;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.line-text {
+    margin: 0 10px;
+    white-space: nowrap;
+}
 
 
 /* Centering navbar links */
@@ -120,32 +149,41 @@ a {
         justify-content: center;
     }
 
+    .g-form{
+        margin-right: 15px;
+    }
+
     .offcanvas {
-        width: max-content;        
-        background: transparent;   
+        width: max-content;
+        background: transparent;
         backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(5px); 
-        position: fixed;          
-        top: 0;                   
-        left: 0;                   
-        height: 100vh;             
-        overflow-y: auto;          
-        padding: 1rem;             
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); 
+        -webkit-backdrop-filter: blur(5px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 1rem;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
         transition: left 0.3s ease;
     }
-    
+
     /* Optional: Style for the navbar links */
     .offcanvas a {
-        color: #ffffff;                /* Sets the text color of links */
-        text-decoration: none;      /* Removes underline from links */
-        display: block;             /* Makes the links block-level elements */
-        padding: 0.5rem 0;          /* Adds padding around the links */
+        color: #ffffff;
+        /* Sets the text color of links */
+        text-decoration: none;
+        /* Removes underline from links */
+        display: block;
+        /* Makes the links block-level elements */
+        padding: 0.5rem 0;
+        /* Adds padding around the links */
     }
-    
+
     /* Optional: Hover effect for the links */
     .offcanvas a:hover {
-        color: #ffcc00;             /* Changes the color on hover */
+        color: #ffcc00;
+        /* Changes the color on hover */
     }
 
     .btn-close {
@@ -155,13 +193,15 @@ a {
     .search-bar {
         width: fit-content;
     }
-    
+
     .custom-toggler {
         color: white;
     }
+
     .card {
         margin-left: 15px;
     }
+
     .img-fluid {
         margin-left: 0px;
     }
