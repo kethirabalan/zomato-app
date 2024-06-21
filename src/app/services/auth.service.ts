@@ -118,8 +118,16 @@ export class AuthService {
       localStorage.removeItem(key);
     }
   }
-  googleSignIn() {
+  
+  googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(this.fireauth,provider)
-  }
+    return signInWithPopup(this.fireauth, provider)
+      .then((result) => {
+        this.router.navigate(['/restaurant']);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        console.error("Error during sign-in: ", error);
+      });
+  };
 }

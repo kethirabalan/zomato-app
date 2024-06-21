@@ -1,14 +1,26 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ToastService {
-  toasts: any[] = [];
 
-  show(textOrTpl: string | TemplateRef<any>, options: any = {}): void {
-    this.toasts.push({ textOrTpl, ...options });
+  constructor(private toastr: ToastrService) {}
+
+  showSuccess(message: string, title: string = 'Success') {
+    this.toastr.success(message, title);
   }
 
-  remove(toast: any): void {
-    this.toasts = this.toasts.filter(t => t !== toast);
+  showError(message: string, title: string = 'Error') {
+    this.toastr.error(message, title);
+  }
+
+  showInfo(message: string, title: string = 'Info') {
+    this.toastr.info(message, title);
+  }
+
+  showWarning(message: string, title: string = 'Warning') {
+    this.toastr.warning(message, title);
   }
 }

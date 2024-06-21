@@ -10,7 +10,7 @@ selector: 'app-nav-bar',
 standalone: true,
 imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
 templateUrl: './nav-bar.component.html',
-styleUrls: ['./nav-bar.component.scss'] // Corrected to styleUrls
+styleUrls: ['./nav-bar.component.scss'] 
 })
 
 export class NavBarComponent implements OnInit {

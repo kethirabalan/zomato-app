@@ -55,3 +55,27 @@
 .line{
     width: 395px;
 }
+
+@media (max-width: 768px) {
+
+    .img-fluid {
+        margin-left: 0px;
+    }
+    .mobileimg {
+        display: none;
+    }
+
+    .line{
+        width: auto;
+    }
+
+    .imgcard {
+        cursor: pointer;
+        width: auto;
+        margin-left: 20px;
+     }
+
+     .phone {
+        margin-right: auto;
+    }
+}
