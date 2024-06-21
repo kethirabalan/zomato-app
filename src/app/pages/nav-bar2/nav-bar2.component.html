@@ -1,69 +1,74 @@
 <div class="head">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="../../assets/footerlogo.png" class="logo" alt="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-          aria-controls="offcanvasExample" aria-expanded="true" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Zomato</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/">
+        <img src="../../assets/footerlogo.png" class="logo" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="title" id="offcanvasExampleLabel">Zomato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+        <div class="d-flex ms-auto">
+          <div *ngIf="!isLoggedIn">
+            <button class="btn btn-primary login" routerLink="/">Login</button>
           </div>
-          <div class="d-flex ms-auto">
-            <div class="user" *ngIf="isLoggedIn">
-              <div class="btn-group">
-                <img class="profileimg" [src]="profileImgSrc" alt="User Image">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ username }}
-                </button>
-                <ul class="dropdown-menu">
-                  <div>
-                    <li><a class="dropdown-item" href="#editProfile" data-bs-toggle="modal"
-                        data-bs-target="#editProfileModal" (click)="editprofile()">
-                        <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a>
-                    </li>
-                  </div>
-                  <li><a class="dropdown-item" routerLink="/checkout"><img class="logout" src="../../../assets/cart.png"
-                         alt="cart"> Checkout</a></li>
-                  <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
-                        src="../../../assets/log-out.png" data-bs-dismiss="editProfileModal" alt="logout"> Logout</a></li>
-                </ul>
-              </div>
-            </div>
-            <div *ngIf="!isLoggedIn">
-              <!-- Add login link or other content here -->
-            </div>
-            <div class="" routerLink="/checkout">
-              <img class="cart-icon" src="../../../assets/cart.png" alt="Cart">
-              <span class="badge bg-primary rounded-pill">{{ cartItems.length }}</span>
+          <div class="user" *ngIf="isLoggedIn">
+            <div class="btn-group">
+              <img class="profileimg" [src]="profileImgSrc" alt="User Image">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ username }}
+              </button>
+              <ul class="dropdown-menu">
+                <div>
+                  <li><a class="dropdown-item" href="#editProfile" data-bs-toggle="modal"
+                      data-bs-target="#editProfileModal" (click)="editprofile()">
+                      <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a>
+                  </li>
+                </div>
+                <li><a class="dropdown-item" routerLink="/checkout"><img class="logout" src="../../../assets/cart.png"
+                      alt="cart"> Checkout</a></li>
+                <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
+                      src="../../../assets/log-out.png" data-bs-dismiss="editProfileModal" alt="logout"> Logout</a></li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <!-- Edit Profile Modal -->
-  <div class="modal" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-pencil-square p-2"></i>Edit Profile</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form (ngSubmit)="updateProfile()">
-            <div class="mb-3">
-              <label for="profileImage" class="form-label">Profile Image</label>
-              <input class="form-control" type="file" id="profileImage" (change)="onFileSelected($event)">
-            </div>
-            <!-- Add other profile fields here if needed -->
-            <button type="submit" data-bs-dismiss="modal" id="editProfileModal" class="btn btn-primary">Save changes</button>
-          </form>
+          <div *ngIf="!isLoggedIn">
+            <!-- Add login link or other content here -->
+          </div>
+          <div class="" routerLink="/checkout">
+            <img class="cart-icon" src="../../../assets/cart.png" alt="Cart">
+            <span class="badge bg-primary rounded-pill">{{ cartItems.length }}</span>
+          </div>
         </div>
       </div>
     </div>
+  </nav>
+</div>
+<!-- Edit Profile Modal -->
+<div class="modal" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-pencil-square p-2"></i>Edit Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateProfile()">
+          <div class="mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input class="form-control" type="file" id="profileImage" (change)="onFileSelected($event)">
+          </div>
+          <!-- Add other profile fields here if needed -->
+          <button type="submit" data-bs-dismiss="modal" id="editProfileModal" class="btn btn-primary">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
   </div>
+</div>

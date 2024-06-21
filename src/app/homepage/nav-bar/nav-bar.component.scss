@@ -168,22 +168,15 @@ a {
         transition: left 0.3s ease;
     }
 
-    /* Optional: Style for the navbar links */
     .offcanvas a {
         color: #ffffff;
-        /* Sets the text color of links */
         text-decoration: none;
-        /* Removes underline from links */
         display: block;
-        /* Makes the links block-level elements */
         padding: 0.5rem 0;
-        /* Adds padding around the links */
     }
 
-    /* Optional: Hover effect for the links */
     .offcanvas a:hover {
         color: #ffcc00;
-        /* Changes the color on hover */
     }
 
     .btn-close {
