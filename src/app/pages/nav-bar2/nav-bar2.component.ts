@@ -16,7 +16,9 @@ export class NavBar2Component implements OnInit {
   profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
   cartItems: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.profileImgSrc = this.authService.getProfileImage();
+  }
 
   ngOnInit() {
     this.loadUser();
@@ -59,11 +61,12 @@ export class NavBar2Component implements OnInit {
       reader.onload = () => {
         const base64Image = reader.result as string;
         this.profileImgSrc = base64Image; // Update the profile image in the UI
-        this.authService.setProfileImage(base64Image); // Save to local storage
+        this.authService.setProfileImage(base64Image); // Save to Firebase Realtime Database
       };
       reader.readAsDataURL(file);
     }
   }
+
 
   updateProfile() {
     // Additional logic to update the profile details can be added here
