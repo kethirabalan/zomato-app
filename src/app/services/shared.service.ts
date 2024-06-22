@@ -37,6 +37,15 @@ export class SharedService {
     return [];
   }
 
+  async removeItemFromCart(item: any): Promise<void> {
+    const cartKey = this.getUserCartKey();
+    if (cartKey) {
+      const cartItems = await this.getCartItems();
+      const updatedCartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
+      await set(ref(this.db, cartKey), updatedCartItems);
+    }
+  }
+
   clearCart(): void {
     const cartKey = this.getUserCartKey();
     if (cartKey) {

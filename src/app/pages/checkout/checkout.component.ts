@@ -4,11 +4,12 @@ import { SharedService } from '../../services/shared.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBar2Component } from '../nav-bar2/nav-bar2.component';
+import { PdfGeneratorService } from '../../services/pdf-generator.service';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, NavBar2Component],
+  imports: [RouterLink, FormsModule, CommonModule, NavBar2Component,],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
@@ -20,6 +21,25 @@ export class CheckoutComponent implements OnInit {
   promoCodeApplied: boolean = false;
   promoDiscount: number = 0;
   cartItems: any[] = [];
+  cartItemRemoved: boolean = false;
+
+
+  formData = {
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    address: '',
+    address2: '',
+    country: '',
+    state: '',
+    zip: '',
+    cart_items: '',
+    promo_code: '',
+    promo_discount: '',
+    total_price: ''
+  };
+
 
   validPromoCodes: { [key: string]: number } = {
     'EXAMPLECODE': 5,
@@ -27,7 +47,7 @@ export class CheckoutComponent implements OnInit {
     'SAVE15': 15
   };
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: SharedService, private pdfGenerator: PdfGeneratorService) {}
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -59,5 +79,29 @@ export class CheckoutComponent implements OnInit {
       this.promoDiscount = 0;
       this.calculateTotalPrice();
     }
+  }
+
+  async removeFromCart(index: number): Promise<void> {
+    if (index >= 0 && index < this.cartItems.length) {
+      const item = this.cartItems[index];
+      this.cartItems.splice(index, 1);
+      this.calculateTotalPrice(); // Recalculate total price after removal
+
+      // Display danger alert for item removal
+      this.cartItemRemoved = true;
+      setTimeout(() => {
+        this.cartItemRemoved = false;
+      }, 3000); // Hide message after 3 seconds
+
+      try {
+        await this.sharedService.removeItemFromCart(item);
+      } catch (error) {
+        console.error('Error removing item from cart:', error);
+      }
+    }
+  }
+
+  onSubmit() {
+    this.pdfGenerator.generatePdf(this.formData);
   }
 }

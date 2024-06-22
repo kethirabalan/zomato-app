@@ -11,7 +11,9 @@
             </a>
           </li>
         </ul>
-  
+        <div *ngIf="cartItemAdded" class="alert alert-success">
+          Item added to cart successfully!
+        </div>
         <div class="restaurant-menu row">
           <div class="menu-item col-md-4 mb-4" *ngFor="let item of filteredMenuItems">
             <div class="card">
@@ -22,7 +24,7 @@
                 <p class="card-text">{{ item.location }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="price"> {{ item.price.toFixed(2) | currency:'INR' }}</div>
-                  <a class="btn btn-primary" (click)="addtocart(item)">Add to cart</a>
+                  <button (click)="addAndShowMessage(item)" class="btn btn-primary">Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -31,3 +33,6 @@
       </div>
     </div>
   </div>
+  
+
+ 

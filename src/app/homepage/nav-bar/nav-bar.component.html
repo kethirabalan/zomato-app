@@ -89,6 +89,12 @@
                             placeholder="Enter your password" [(ngModel)]="loginObj.password" required>
                     </div>
                 </div>
+                <div *ngIf="loginSuccess" class="alert alert-success" role="alert">
+                    Login successful!
+                </div>
+                <div *ngIf="loginError" class="alert alert-danger" role="alert">
+                    Invalid credentials. Please try again.
+                  </div>
                 <div class="d-grid">
                     <button type="submit" class="btn text-light bg-danger bt" data-bs-dismiss="modal" id="login">Login</button>
                 </div>

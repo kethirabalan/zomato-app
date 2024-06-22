@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-nav-bar2',
@@ -15,17 +16,21 @@ export class NavBar2Component implements OnInit {
   isLoggedIn: boolean = false;
   profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
   cartItems: any[] = [];
+  cartItemsCount: number = 0;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+    private cartService: CartService,
+    private router: Router) {
     this.profileImgSrc = this.authService.getProfileImage();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUser();
     this.loadProfileImage();
+    this.loadCartItemsCount();
   }
 
-  loadUser() {
+  loadUser(): void {
     const storedUsername = this.authService.getLoggedInUser();
     if (storedUsername) {
       this.username = storedUsername;
@@ -33,12 +38,19 @@ export class NavBar2Component implements OnInit {
     }
   }
 
-  loadProfileImage() {
+  loadProfileImage(): void {
     const storedProfileImg = this.authService.getProfileImage();
     if (storedProfileImg) {
       this.profileImgSrc = storedProfileImg;
     }
   }
+
+  loadCartItemsCount(): void {
+    this.cartService.getCartItems().subscribe(items => {
+      this.cartItemsCount = items.length;
+    });
+  }
+
 
   logout() {
     this.authService.logout();

@@ -15,6 +15,8 @@ export class MenuComponent {
   categories = ['All', 'Biryani', 'Chicken', 'Pizza', 'Burger', 'Pasta'];
   selectedCategory = 'All';
 
+  cartItemAdded: boolean = false;
+
   menuItems = [
     { title: 'California Pizza',shop:'Oyalo Pizza', category: 'Pizza', location: 'Tirunelveli', price: 525.00, image: 'assets/menu-1.jpg' },
     { title: 'Curry Chicken', shop:'A1 Parotta Stall', category: 'Chicken', location: 'Tirunelveli', price: 625.00, image: 'assets/menu-2.jpg' },
@@ -26,6 +28,23 @@ export class MenuComponent {
 
   constructor(private sharedService: SharedService, private router: Router) {}
 
+  addAndShowMessage(item: any) {
+    // Call your existing function to add item to cart
+    this.addtocart(item);
+
+    // Display success message
+    this.cartItemAdded = true;
+    setTimeout(() => {
+      this.cartItemAdded = false;
+    }, 3000); // Hide message after 3 seconds
+  }
+
+  addtocart(item: any) {
+    this.sharedService.setItem(item);
+    console.log('Adding item to cart:', item);
+    // Example: You might have HTTP calls or local storage updates here
+  }
+
   get filteredMenuItems() {
     if (this.selectedCategory === 'All') {
       return this.menuItems;
@@ -35,9 +54,5 @@ export class MenuComponent {
 
   selectCategory(category: string) {
     this.selectedCategory = category;
-  }
-
-  addtocart(item: any) {
-    this.sharedService.setItem(item);
   }
 }

@@ -26,6 +26,8 @@ export class NavBarComponent implements OnInit {
     password: '',
   };
   userLocation: string;
+  loginSuccess = false; // Track login success state
+  loginError = false; // Track login error state
 
   constructor(
     private locationService: LocationService,
@@ -76,7 +78,15 @@ export class NavBarComponent implements OnInit {
   onLogin() {
     const isLoggedIn = this.authService.login(this.loginObj);
     if (isLoggedIn) {
-      // Handle successful login actions if needed
+      this.loginSuccess = true; // Set login success flag
+      setTimeout(() => {
+        this.loginSuccess = false; // Reset after a delay (if needed)
+      }, 3000); // Reset after 3 seconds (adjust as needed)
+    } else {
+      this.loginError = true; // Set login error flag
+      setTimeout(() => {
+        this.loginError = false; // Reset after a delay (if needed)
+      }, 3000); // Reset after 3 seconds (adjust as needed)
     }
   }
 
