@@ -3,24 +3,43 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth } from '@angular/fire/auth';
 import { signInWithPopup } from 'firebase/auth';
+import { getDatabase, ref, set, get, child } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  signupUsers: any[];
+  signupUsers: any[] = [];
   loggedInUser: any = null;
+  db = getDatabase();
 
   constructor(private fireauth: Auth, private router: Router) {
-    const localdata = this.getLocalStorageItem('signupUsers');
-    this.signupUsers = localdata ? JSON.parse(localdata) : [];
+    this.loadSignupUsers();
+  }
+
+  private loadSignupUsers(): void {
+    const usersRef = ref(this.db, 'signupUsers');
+    get(usersRef).then(snapshot => {
+      if (snapshot.exists()) {
+        this.signupUsers = snapshot.val();
+      } else {
+        console.log('No signup users available');
+      }
+    }).catch(error => {
+      console.error('Error loading signup users:', error);
+    });
+  }
+
+  private saveSignupUsers(): void {
+    set(ref(this.db, 'signupUsers'), this.signupUsers)
+      .catch(error => console.error('Error saving signup users:', error));
   }
 
   signUp(user: any): boolean {
     if (this.isValidSignUp(user)) {
-      user.profileImage = '../../../assets/user.avif'; // Set default profile image for new users
+      user.profileImage = '../../../assets/user.avif';
       this.signupUsers.push(user);
-      this.setLocalStorageItem('signupUsers', JSON.stringify(this.signupUsers));
+      this.saveSignupUsers();
       alert('Account created successfully');
       return true;
     } else {
@@ -37,8 +56,7 @@ export class AuthService {
     if (isUserExist) {
       alert('User Login Successfully');
       this.loggedInUser = user;
-      this.setLocalStorageItem('username', user.userName);
-      // Redirect to restaurant items page
+      this.saveLoginState(user.userName);
       this.router.navigate(['/restaurant']);
       return true;
     } else {
@@ -48,16 +66,16 @@ export class AuthService {
   }
 
   getLoggedInUser(): string | null {
-    return this.getLocalStorageItem('username');
+    return localStorage.getItem('username');
   }
 
-  getProfileImage(): string | null {
+  getProfileImage(): string {
     const username = this.getLoggedInUser();
     if (username) {
       const user = this.signupUsers.find(u => u.userName === username);
-      return user?.profileImage || '../../../assets/user.avif'; // Default image if not set
+      return user?.profileImage || '../../../assets/user.avif';
     }
-    return '../../../assets/user.avif'; // Default image for new users or if no user is logged in
+    return '../../../assets/user.avif';
   }
 
   setProfileImage(image: string): void {
@@ -66,15 +84,19 @@ export class AuthService {
       const user = this.signupUsers.find(u => u.userName === username);
       if (user) {
         user.profileImage = image;
-        this.setLocalStorageItem('signupUsers', JSON.stringify(this.signupUsers));
+        this.saveSignupUsers();
       }
     }
   }
 
   logout(): void {
     this.loggedInUser = null;
-    this.removeLocalStorageItem('username');
+    localStorage.removeItem('username');
     this.router.navigate(['/']);
+  }
+
+  private saveLoginState(username: string): void {
+    localStorage.setItem('username', username);
   }
 
   private isValidSignUp(user: any): boolean {
@@ -92,31 +114,12 @@ export class AuthService {
   }
 
   private isValidPhone(phone: any): boolean {
-    const phoneRegex = /^\d{10}$/; // 10 digit phone number
+    const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phone);
   }
 
   private isValidPassword(password: any): boolean {
-    return password.length >= 8; // Password should be at least 8 characters long
-  }
-
-  private getLocalStorageItem(key: string): string | null {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem(key);
-    }
-    return null;
-  }
-
-  private setLocalStorageItem(key: string, value: string): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem(key, value);
-    }
-  }
-
-  private removeLocalStorageItem(key: string): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem(key);
-    }
+    return password.length >= 8;
   }
 
   googleSignIn = () => {
@@ -126,8 +129,7 @@ export class AuthService {
         this.router.navigate(['/restaurant']);
       })
       .catch((error) => {
-        // Handle Errors here.
-        console.error("Error during sign-in: ", error);
+        console.error('Error during sign-in:', error);
       });
   };
 }

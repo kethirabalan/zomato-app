@@ -8,7 +8,7 @@ import { NavBar2Component } from '../nav-bar2/nav-bar2.component';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule,NavBar2Component],
+  imports: [RouterLink, FormsModule, CommonModule, NavBar2Component],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
@@ -31,11 +31,15 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCartItems();
-    this.calculateTotalPrice();
   }
 
-  loadCartItems(): void {
-    this.cartItems = this.sharedService.getCartItems();
+  async loadCartItems(): Promise<void> {
+    try {
+      this.cartItems = await this.sharedService.getCartItems();
+      this.calculateTotalPrice();
+    } catch (error) {
+      console.error('Error loading cart items:', error);
+    }
   }
 
   calculateTotalPrice(): void {

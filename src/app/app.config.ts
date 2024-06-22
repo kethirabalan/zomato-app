@@ -1,13 +1,12 @@
-import { ApplicationConfig, } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
-import { initializeApp, provideFirebaseApp, } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { routes } from './app.routes';
-import { provideHttpClient,withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyBALSY5WRp-fgQUAXawjzvFcd7ZGpqMPGc",
@@ -18,13 +17,14 @@ const firebaseConfig = {
   appId: "1:73423423729:web:85c4aa0549c974c8c30150"
 };
 
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withFetch()), // Add withFetch() here
+    provideHttpClient(withFetch()),
     provideClientHydration(),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)), // Initialize Firebase app once
-    provideAuth(() => getAuth())
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideDatabase(() => getDatabase())
   ],
 };
