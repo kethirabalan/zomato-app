@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth} from '@angular/fire/auth';
+import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth } from '@angular/fire/auth';
 import { signInWithPopup } from 'firebase/auth';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AuthService {
   signupUsers: any[];
   loggedInUser: any = null;
 
-  constructor(private fireauth : Auth, private router: Router) {
+  constructor(private fireauth: Auth, private router: Router) {
     const localdata = this.getLocalStorageItem('signupUsers');
     this.signupUsers = localdata ? JSON.parse(localdata) : [];
   }
@@ -118,7 +118,7 @@ export class AuthService {
       localStorage.removeItem(key);
     }
   }
-  
+
   googleSignIn = () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.fireauth, provider)
