@@ -24,17 +24,19 @@
                                 <a class="nav-link" routerLink="/add-restaurant">Add restaurant</a>
                             </li>
                             <li class="nav-item">
-                                <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Login">Log In</a>
+                                <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Login">Log
+                                    In</a>
                             </li>
                             <li class="nav-item">
-                                <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#signup">Signup</a>
+                                <a type="button" class="nav-link" data-bs-toggle="modal"
+                                    data-bs-target="#signup">Signup</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>    
+    </nav>
     <div class="content-wrapper text-center">
         <img src="../../assets/logo.png" class="logo mb-3" alt="logo">
         <h1 class="h5">Discover the best food & drinks</h1>
@@ -56,10 +58,10 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#" (click)="onDetectLocationClick()">Detect Location</a>
                                 <div *ngIf="userLocation" class="dropdown-item">User Location: {{ userLocation }}</div>
-                              </div>
+                            </div>
                         </div>
                         <input type="text" class="form-control" placeholder="Search for restaurant, cuisine or a dish">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Login">Search</button>
+                        <button class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </div>
@@ -67,7 +69,7 @@
     </div>
 </div>
 <!-- Login Modal -->
-<div class="modal background-content" id="Login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+<div class="modal fade background-content" id="Login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,6 +77,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form (ngSubmit)="onLogin()" class="layout">
+                <div>
+                    <app-message></app-message>
+                </div>
                 <div class="form-group mt-3 mb-3 instyle">
                     <div class="input-group mt-3">
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
@@ -84,19 +89,16 @@
                 </div>
                 <div class="form-group mt-3 mb-3 instyle">
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                        <input type="password" class="form-control" id="loginpassword" name="password"
-                            placeholder="Enter your password" [(ngModel)]="loginObj.password" required>
+                      <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                      <input type="password" class="form-control" id="loginpassword" name="password" placeholder="Enter your password" [(ngModel)]="loginObj.password" required #loginpassword>
+                      <button type="button" class="btn btn-light eye" (click)="togglePasswordVisibility('loginpassword')">
+                        <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                      </button>
                     </div>
-                </div>
-                <div *ngIf="loginSuccess" class="alert alert-success" role="alert">
-                    Login successful!
-                </div>
-                <div *ngIf="loginError" class="alert alert-danger" role="alert">
-                    Invalid credentials. Please try again.
-                  </div>
+                  </div>                               
                 <div class="d-grid">
-                    <button type="submit" class="btn text-light bg-danger bt" data-bs-dismiss="modal" id="login">Login</button>
+                    <button type="submit" class="btn text-light bg-danger bt" id="login" data-bs-dismiss="modal">
+                    <i class="bi bi-door-open"></i> Login</button>
                 </div>
                 <div class="line-container mt-2">
                     <div class="line"></div>
@@ -130,6 +132,7 @@
             </div>
             <form (ngSubmit)="onSignUp()" class="layout">
                 <div class="instyle">
+                    <app-message></app-message>
                     <div class="form-group mt-3">
                         <label for="username">Username:</label>
                         <div class="input-group">
@@ -160,12 +163,16 @@
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                             <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Enter your password" [(ngModel)]="signupObj.password" required>
+                                <button type="button" class="btn btn-light eye" (click)="togglePasswordVisibility('loginpassword')">
+                                    <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                  </button>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="form-group form-check mt-3">
                         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                         <label class="form-check-label" for="terms">I agree to Zomato's <a class="text-success"
-                                href="">Terms of Service</a> & <a class="text-success" href="">Privacy Policy</a></label>
+                                href="">Terms of Service</a> & <a class="text-success" href="">Privacy
+                                Policy</a></label>
                     </div>
                 </div>
                 <div class="d-grid mt-3">

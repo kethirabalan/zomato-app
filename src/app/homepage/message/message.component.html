@@ -1,0 +1,3 @@
+<div *ngIf="message" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'error'}" class="alert alert-dismissible fade show" role="alert">
+  <i class="bi" [ngClass]="{'bi-check-circle': messageType === 'success', 'bi-exclamation-triangle': messageType === 'error'}"></i> {{ message }}
+</div>

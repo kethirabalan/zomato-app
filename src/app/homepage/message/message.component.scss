@@ -1,0 +1,15 @@
+.alert {
+    width: auto;
+    height: 50px;
+    position:sticky;
+  }
+
+
+  @media (max-width: 768px) {
+    .alert {
+      width: auto;
+      height: 50px;
+      position:sticky;
+    }
+  
+  }

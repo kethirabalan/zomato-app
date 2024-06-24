@@ -75,42 +75,10 @@ a {
     margin: 10px;
 }
 
-.offcanvas {
-    width: max-content;
-    background: transparent;
-
-    .title {
-        color: white;
-    }
-}
-
 .onelogo {
     width: 70px;
     height: 70px;
     border-radius: 50px;
-}
-
-.modal background-content show {
-    background: none;
-}
-
-.modal-backdrop.show {
-    opacity: 0; // Change this to the desired opacity value or remove it to cancel the opacity style completely
-    color: #ffcc00;
-}
-
-.modal {
-    --bs-modal-margin: 1.75rem;
-}
-
-.modal-open .background-content {
-    visibility: hidden;
-    /* Hides the background */
-    opacity: var;
-    /* Optional: Makes the background transparent */
-    transition: visibility 0s, opacity 0.5s linear;
-    /* Adds transition for smooth effect */
-    background-color: transparent;
 }
 
 .google {
@@ -140,8 +108,11 @@ a {
     white-space: nowrap;
 }
 
+.eye {
+    outline: auto;
+    outline-color: #ebeaea;
+}
 
-/* Centering navbar links */
 @media (max-width: 768px) {
     .navbar-nav {
         margin: 0 auto;
@@ -149,7 +120,7 @@ a {
         justify-content: center;
     }
 
-    .g-form{
+    .g-form {
         margin-right: 15px;
     }
 
@@ -166,6 +137,12 @@ a {
         padding: 1rem;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
         transition: left 0.3s ease;
+        width: max-content;
+        background: transparent;
+
+        .title {
+            color: white;
+        }
     }
 
     .offcanvas a {

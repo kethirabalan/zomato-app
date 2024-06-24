@@ -21,18 +21,16 @@
           <div class="user" *ngIf="isLoggedIn">
             <div class="btn-group">
               <img class="profileimg" [src]="profileImgSrc" alt="User Image">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-dismiss="dropdown" aria-expanded="false">
                 {{ username }}
               </button>
               <ul class="dropdown-menu">
                 <div>
                   <li><a class="dropdown-item" href="#editProfile" data-bs-toggle="modal"
-                      data-bs-target="#editProfileModal" (click)="editprofile()">
+                      data-bs-target="#editProfileModal" data-bs-dismiss="modal" (click)="editprofile()">
                       <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a>
                   </li>
                 </div>
-                <li><a class="dropdown-item" routerLink="/checkout"><img class="logout" src="../../../assets/cart.png"
-                      alt="cart"> Checkout</a></li>
                 <li><a class="dropdown-item" href="#logout" (click)="logout()"><img class="logout"
                       src="../../../assets/log-out.png" data-bs-dismiss="editProfileModal" alt="logout"> Logout</a></li>
               </ul>
@@ -41,9 +39,8 @@
           <div *ngIf="!isLoggedIn">
             <!-- Add login link or other content here -->
           </div>
-          <div class="" routerLink="/checkout">
-            <img class="cart-icon" src="../../../assets/cart.png" alt="Cart">
-             <span class="badge bg-primary rounded-pill">{{ cartItemsCount }}</span>
+          <div>
+            <img class="cart-icon" routerLink="/checkout" src="../../../assets/cart.png" alt="Cart">
           </div>
         </div>
       </div>
@@ -57,7 +54,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-pencil-square p-2"></i>Edit Profile</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="updateProfile()">

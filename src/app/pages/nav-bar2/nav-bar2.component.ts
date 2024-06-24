@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-nav-bar2',
@@ -19,7 +18,6 @@ export class NavBar2Component implements OnInit {
   cartItemsCount: number = 0;
 
   constructor(private authService: AuthService,
-    private cartService: CartService,
     private router: Router) {
     this.profileImgSrc = this.authService.getProfileImage();
   }
@@ -27,7 +25,6 @@ export class NavBar2Component implements OnInit {
   ngOnInit(): void {
     this.loadUser();
     this.loadProfileImage();
-    this.loadCartItemsCount();
   }
 
   loadUser(): void {
@@ -45,11 +42,6 @@ export class NavBar2Component implements OnInit {
     }
   }
 
-  loadCartItemsCount(): void {
-    this.cartService.getCartItems().subscribe(items => {
-      this.cartItemsCount = items.length;
-    });
-  }
 
 
   logout() {

@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth } from '@angular/fire/auth';
 import { signInWithPopup } from 'firebase/auth';
 import { getDatabase, ref, set, get, child } from '@angular/fire/database';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   loggedInUser: any = null;
   db = getDatabase();
 
-  constructor(private fireauth: Auth, private router: Router) {
+  constructor(private fireauth: Auth, private messageService: MessageService, private router: Router) {
     this.loadSignupUsers();
   }
 
@@ -40,13 +41,14 @@ export class AuthService {
       user.profileImage = '../../../assets/user.avif';
       this.signupUsers.push(user);
       this.saveSignupUsers();
-      alert('Account created successfully');
+      this.messageService.showMessage('Account created successfully', 'success');
       return true;
     } else {
-      alert('Invalid signup details');
+      this.messageService.showMessage('Invalid signup details', 'error');
       return false;
     }
   }
+
 
   login(user: any): boolean {
     const isUserExist = this.signupUsers.find(
@@ -54,13 +56,15 @@ export class AuthService {
     );
 
     if (isUserExist) {
-      alert('User Login Successfully');
+      this.messageService.showMessage('User Login Successfully', 'success');
       this.loggedInUser = user;
       this.saveLoginState(user.userName);
-      this.router.navigate(['/restaurant']);
+      setTimeout(() => {
+        this.router.navigate(['/restaurant']);
+      }, 3000); // Wait for 3 seconds before navigating
       return true;
     } else {
-      alert('Wrong credentials');
+      this.messageService.showMessage('Wrong credentials', 'error');
       return false;
     }
   }
