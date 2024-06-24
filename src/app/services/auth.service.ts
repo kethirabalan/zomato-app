@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth } from '@angular/fire/auth';
 import { signInWithPopup } from 'firebase/auth';
 import { getDatabase, ref, set, get, child } from '@angular/fire/database';
 import { MessageService } from './message.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,17 @@ export class AuthService {
   loggedInUser: any = null;
   db = getDatabase();
 
-  constructor(private fireauth: Auth, private messageService: MessageService, private router: Router) {
+  constructor(
+    private fireauth: Auth,
+    private messageService: MessageService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private _platformId: object
+  ) {
     this.loadSignupUsers();
+    if (isPlatformBrowser(this._platformId)) {
+      const localdata = localStorage.getItem('signupUsers');
+      this.signupUsers = localdata ? JSON.parse(localdata) : [];
+    }
   }
 
   private loadSignupUsers(): void {
@@ -34,6 +44,9 @@ export class AuthService {
   private saveSignupUsers(): void {
     set(ref(this.db, 'signupUsers'), this.signupUsers)
       .catch(error => console.error('Error saving signup users:', error));
+    if (isPlatformBrowser(this._platformId)) {
+      localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
+    }
   }
 
   signUp(user: any): boolean {
@@ -49,7 +62,7 @@ export class AuthService {
     }
   }
 
-
+  
   login(user: any): boolean {
     const isUserExist = this.signupUsers.find(
       u => u.userName === user.userName && u.password === user.password
@@ -70,7 +83,10 @@ export class AuthService {
   }
 
   getLoggedInUser(): string | null {
-    return localStorage.getItem('username');
+    if (isPlatformBrowser(this._platformId)) {
+      return localStorage.getItem('username');
+    }
+    return null;
   }
 
   getProfileImage(): string {
@@ -95,12 +111,16 @@ export class AuthService {
 
   logout(): void {
     this.loggedInUser = null;
-    localStorage.removeItem('username');
+    if (isPlatformBrowser(this._platformId)) {
+      localStorage.removeItem('username');
+    }
     this.router.navigate(['/']);
   }
 
   private saveLoginState(username: string): void {
-    localStorage.setItem('username', username);
+    if (isPlatformBrowser(this._platformId)) {
+      localStorage.setItem('username', username);
+    }
   }
 
   private isValidSignUp(user: any): boolean {

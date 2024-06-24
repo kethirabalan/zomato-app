@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, ElementRef,  ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ElementRef, ViewChild } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,13 +8,12 @@ import { MessageComponent } from '../message/message.component';
 import { MessageService } from '../../services/message.service';
 
 @Component({
-selector: 'app-nav-bar',
-standalone: true,
-imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink,MessageComponent],
-templateUrl: './nav-bar.component.html',
-styleUrls: ['./nav-bar.component.scss'] 
+  selector: 'app-nav-bar',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, MessageComponent],
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.scss']
 })
-
 export class NavBarComponent implements OnInit {
   signupUsers: any[] = [];
   signupObj: any = {
@@ -80,23 +79,26 @@ export class NavBarComponent implements OnInit {
         email: '',
         password: '',
       };
+      if (isPlatformBrowser(this._platformId)) {
+        localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
+      }
     }
   }
 
   onLogin() {
     const isLoggedIn = this.authService.login(this.loginObj);
 
-      if (isLoggedIn) {
-        this.loginSuccess = true;
-        setTimeout(() => {
-          this.loginSuccess = false;
-        }, 3000); // Show success message for 3 seconds
-      } else {
-        this.loginError = true;
-        setTimeout(() => {
-          this.loginError = false;
-        }, 3000); // Show error message for 3 seconds
-      }
+    if (isLoggedIn) {
+      this.loginSuccess = true;
+      setTimeout(() => {
+        this.loginSuccess = false;
+      }, 3000); // Show success message for 3 seconds
+    } else {
+      this.loginError = true;
+      setTimeout(() => {
+        this.loginError = false;
+      }, 3000); // Show error message for 3 seconds
+    }
   }
 
   togglePasswordVisibility(inputId: string) {
@@ -105,7 +107,6 @@ export class NavBarComponent implements OnInit {
     input.type = this.showPassword ? 'text' : 'password';
   }
 
-
   onSignup() {
     const isSignUp = this.authService.signUp(this.signupObj);
     if (isSignUp) {
@@ -113,6 +114,9 @@ export class NavBarComponent implements OnInit {
       setTimeout(() => {
         this.signupSuccess = false;
       }, 1000);
+      if (isPlatformBrowser(this._platformId)) {
+        localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
+      }
     } else {
       this.signupError = true;
       setTimeout(() => {
@@ -120,9 +124,8 @@ export class NavBarComponent implements OnInit {
       }, 3000);
     }
   }
-  
+
   signInWithGoogle() {
     this.authService.googleSignIn();
   }
-
 }

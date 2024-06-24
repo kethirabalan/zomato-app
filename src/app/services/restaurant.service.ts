@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Firestore } from '@angular/fire/firestore';
+import { collection } from '@angular/fire/firestore';
+import { addDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
-  private apiUrl = 'http://your-api-url'; // Replace with your actual API URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private firestore: Firestore) {
+    console.log(firestore);
+    
+   }
 
-  addRestaurant(restaurant: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/restaurants`, restaurant);
+//  async addRestaurant(restaurant:{restaurantDetails:string}) {
+//     const userData = collection(this.firestore,'restaurantDetails')
+//     await addDoc(userData,restaurant)
+//   }
+
+  async addRestaurant(restaurant: { name: string, cuisine: string, address: string }) {
+    const userData = collection(this.firestore,'restaurantDetails')
+    await addDoc(userData,restaurant)
   }
 }
