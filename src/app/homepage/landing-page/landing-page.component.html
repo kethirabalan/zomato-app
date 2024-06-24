@@ -43,9 +43,9 @@
                 <p class="mb-4">We will call you once you provide your phone number</p>
                 <div class="input-group mb-3">
                     <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                    <input type="text" class="form-control" id="phone1" name="phone"
-                        placeholder="Enter Phone Number" required>
-                    <button class="btn btn-danger phone" href="">Contact</button>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                        placeholder="Enter Phone Number" [(ngModel)]="phoneNumber" required>
+                    <button class="btn btn-danger phone" (click)="contact()">Contact</button>
                 </div>
                 <div class="my-4">
                     <hr class="line">

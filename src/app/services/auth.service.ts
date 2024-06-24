@@ -64,7 +64,7 @@ export class AuthService {
       }, 3000); // Wait for 3 seconds before navigating
       return true;
     } else {
-      this.messageService.showMessage('Wrong credentials', 'error');
+      this.messageService.showMessage('Invalid credentials. Please try again.', 'error');
       return false;
     }
   }

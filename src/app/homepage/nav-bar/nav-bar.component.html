@@ -97,7 +97,8 @@
                     </div>
                   </div>                               
                 <div class="d-grid">
-                    <button type="submit" class="btn text-light bg-danger bt" id="login" data-bs-dismiss="modal">
+                    <button type="submit" class="btn text-light bg-danger bt" id="login">
+                        <!-- data-bs-dismiss="modal" -->
                     <i class="bi bi-door-open"></i> Login</button>
                 </div>
                 <div class="line-container mt-2">
@@ -128,7 +129,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Signup</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn text-primary btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form (ngSubmit)="onSignUp()" class="layout">
                 <div class="instyle">
