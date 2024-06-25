@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RestaurantService } from '../../services/restaurant.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavBar2Component } from '../nav-bar2/nav-bar2.component';
 import { Footer2Component } from '../footer2/footer2.component';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -19,10 +19,10 @@ export class AddRestaurantComponent {
     address: ''
   };
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private firestoreService: FirestoreService) { }
 
   submitForm() {
-    this.restaurantService.addRestaurant(this.restaurant)
+    this.firestoreService.addRestaurant(this.restaurant)
       .then(() => {
         alert('Restaurant added successfully');
         this.restaurant = { name: '', cuisine: '', address: '' }; // Clear the form

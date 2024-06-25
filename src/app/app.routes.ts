@@ -10,6 +10,7 @@ import { ThankyouComponent } from './pages/thankpage/thankpage.component';
 import { AddRestaurantComponent } from './pages/add-restaurant/add-restaurant.component';
 import { getApps } from 'firebase/app';
 import { GetAppComponent } from './homepage/get-app/get-app.component';
+import { InvestorRelationsComponent } from './pages/investor-relations/investor-relations.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +25,11 @@ export const routes: Routes = [
         path: 'add-restaurant',
         component: AddRestaurantComponent
     },
+    {
+        path: 'investor',
+        component: InvestorRelationsComponent
+    },
+    
     {
         path: 'get-app',
         component: GetAppComponent

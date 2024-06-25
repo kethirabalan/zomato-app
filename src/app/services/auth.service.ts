@@ -1,8 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, Auth } from '@angular/fire/auth';
-import { signInWithPopup } from 'firebase/auth';
+import { Auth, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword,createUserWithEmailAndPassword} from '@angular/fire/auth';
 import { getDatabase, ref, set, get, child } from '@angular/fire/database';
 import { MessageService } from './message.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -12,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AuthService {
   signupUsers: any[] = [];
+  signupEmail: any[] = [];
   loggedInUser: any = null;
   db = getDatabase();
 
@@ -26,6 +25,34 @@ export class AuthService {
       const localdata = localStorage.getItem('signupUsers');
       this.signupUsers = localdata ? JSON.parse(localdata) : [];
     }
+  }
+
+  registerUser(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.fireauth, email, password)
+  }
+  loginUser(email: string, password: string) {
+    return signInWithEmailAndPassword(this.fireauth, email, password)
+  }
+
+  googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.fireauth, provider)
+      .then((result) => {
+        this.router.navigate(['/restaurant']);
+      })
+      .catch((error) => {
+        console.error('Error during sign-in:', error);
+      });
+  }
+
+  logout(): void {
+    this.loggedInUser = null;
+    if (isPlatformBrowser(this._platformId)) {
+      localStorage.removeItem('username');
+      this.router.navigate(['/']);
+      signOut(this.fireauth)
+    }
+
   }
 
   private loadSignupUsers(): void {
@@ -57,27 +84,6 @@ export class AuthService {
       this.messageService.showMessage('Account created successfully', 'success');
       return true;
     } else {
-      this.messageService.showMessage('Invalid signup details', 'error');
-      return false;
-    }
-  }
-
-  
-  login(user: any): boolean {
-    const isUserExist = this.signupUsers.find(
-      u => u.userName === user.userName && u.password === user.password
-    );
-
-    if (isUserExist) {
-      this.messageService.showMessage('User Login Successfully', 'success');
-      this.loggedInUser = user;
-      this.saveLoginState(user.userName);
-      setTimeout(() => {
-        this.router.navigate(['/restaurant']);
-      }, 3000); // Wait for 3 seconds before navigating
-      return true;
-    } else {
-      this.messageService.showMessage('Invalid credentials. Please try again.', 'error');
       return false;
     }
   }
@@ -109,14 +115,6 @@ export class AuthService {
     }
   }
 
-  logout(): void {
-    this.loggedInUser = null;
-    if (isPlatformBrowser(this._platformId)) {
-      localStorage.removeItem('username');
-    }
-    this.router.navigate(['/']);
-  }
-
   private saveLoginState(username: string): void {
     if (isPlatformBrowser(this._platformId)) {
       localStorage.setItem('username', username);
@@ -145,15 +143,4 @@ export class AuthService {
   private isValidPassword(password: any): boolean {
     return password.length >= 8;
   }
-
-  googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(this.fireauth, provider)
-      .then((result) => {
-        this.router.navigate(['/restaurant']);
-      })
-      .catch((error) => {
-        console.error('Error during sign-in:', error);
-      });
-  };
 }

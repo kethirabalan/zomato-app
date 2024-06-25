@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MessageComponent } from '../message/message.component';
 import { MessageService } from '../../services/message.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,39 +17,74 @@ import { MessageService } from '../../services/message.service';
 })
 export class NavBarComponent implements OnInit {
   signupUsers: any[] = [];
-  signupObj: any = {
+  signupObj= {
     userName: '',
     phone: '',
     email: '',
     password: '',
   };
   loginObj: any = {
-    userName: '',
+    email: '',
     password: '',
   };
-  userLocation: string;
+  userLocation: string = '';
   loginSuccess = false;
   loginError = false;
   signupSuccess = false;
   signupError = false;
 
-  @ViewChild('loginpassword') loginpassword!: ElementRef<HTMLInputElement>; // Define the type explicitly
-  showPassword: any;
+  @ViewChild('loginpassword') loginpassword!: ElementRef<HTMLInputElement>;
+  showPassword: boolean = false;
 
   constructor(
     private locationService: LocationService,
     private authService: AuthService,
     private messageService: MessageService,
-    @Inject(PLATFORM_ID) private _platformId: object
-  ) {
-    this.userLocation = '';
+    @Inject(PLATFORM_ID) private platformId: object,
+    private firestoreService: FirestoreService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void { }
+
+  login() {
+    const email = this.loginObj.email;
+    const password = this.loginObj.password;
+    this.authService.loginUser(email, password)
+      .then((res: any) => {
+        setTimeout(() => {
+          this.router.navigate(['/restaurant']);
+        }, 3000);
+        this.messageService.showMessage('User Login Successfully', 'success');
+        console.log('login success');
+      })
+      .catch((error: any) => {
+        this.messageService.showMessage('Invalid credentials. Please try again.', 'error');
+        console.error('login error', error);
+      });
   }
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      const localdata = localStorage.getItem('signupUsers');
-      this.signupUsers = localdata ? JSON.parse(localdata) : [];
-    }
+  signup() {
+    const email = this.signupObj.email;
+    const password = this.signupObj.password;
+    this.authService.registerUser(email, password)
+      .then((res: any) => {
+        this.signupObj = { userName: '', phone: '', email: '',password: '' }; // Clear the form
+        // setTimeout(() => {
+        //   this.router.navigate(['/restaurant']);
+        // }, 3000);
+        this.messageService.showMessage('Account created successfully', 'success');
+        console.log('signup success');
+        this.firestoreService.addsignup(this.signupObj)
+      })
+      .catch((error: any) => {
+        this.messageService.showMessage('Invalid signup details', 'error');
+        console.error('signup error', error);
+      });
+  }
+
+  async signInWithGoogle() {
+    await this.authService.googleSignIn();
   }
 
   onDetectLocationClick() {
@@ -70,62 +106,9 @@ export class NavBarComponent implements OnInit {
       });
   }
 
-  onSignUp() {
-    const isSignedUp = this.authService.signUp(this.signupObj);
-    if (isSignedUp) {
-      this.signupObj = {
-        userName: '',
-        phone: '',
-        email: '',
-        password: '',
-      };
-      if (isPlatformBrowser(this._platformId)) {
-        localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-      }
-    }
-  }
-
-  onLogin() {
-    const isLoggedIn = this.authService.login(this.loginObj);
-
-    if (isLoggedIn) {
-      this.loginSuccess = true;
-      setTimeout(() => {
-        this.loginSuccess = false;
-      }, 3000); // Show success message for 3 seconds
-    } else {
-      this.loginError = true;
-      setTimeout(() => {
-        this.loginError = false;
-      }, 3000); // Show error message for 3 seconds
-    }
-  }
-
   togglePasswordVisibility(inputId: string) {
     this.showPassword = !this.showPassword;
     const input = (this as any)[inputId].nativeElement;
     input.type = this.showPassword ? 'text' : 'password';
-  }
-
-  onSignup() {
-    const isSignUp = this.authService.signUp(this.signupObj);
-    if (isSignUp) {
-      this.signupSuccess = true;
-      setTimeout(() => {
-        this.signupSuccess = false;
-      }, 1000);
-      if (isPlatformBrowser(this._platformId)) {
-        localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-      }
-    } else {
-      this.signupError = true;
-      setTimeout(() => {
-        this.signupError = false;
-      }, 3000);
-    }
-  }
-
-  signInWithGoogle() {
-    this.authService.googleSignIn();
   }
 }
