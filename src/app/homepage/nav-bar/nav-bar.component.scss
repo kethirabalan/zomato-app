@@ -113,6 +113,50 @@ a {
     outline-color: #ebeaea;
 }
 
+
+.pic-holder {
+    border-color: rgba(131, 232, 223, 0.68);
+    width: 60px;
+    height: 60px;
+    
+    .upload-file-block,
+    .upload-loader {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  
+    &:hover .upload-file-block,
+    .uploadProfileInput:focus ~ .upload-file-block {
+      opacity: 1;
+    }
+    
+    &.uploadInProgress .upload-file-block {
+      display: none;
+    }
+    
+    &.uploadInProgress .upload-loader {
+      opacity: 1;
+    }
+  
+    .upload-file-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); // Use bg-dark and bg-opacity-50 equivalent
+      color: #fff; // Use text-white equivalent
+      text-align: center;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 7px;
+    }
+  }
+
+
 @media (max-width: 768px) {
     .navbar-nav {
         margin: 0 auto;

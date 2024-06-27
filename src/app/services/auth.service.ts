@@ -1,37 +1,27 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword,createUserWithEmailAndPassword} from '@angular/fire/auth';
-import { getDatabase, ref, set, get, child } from '@angular/fire/database';
+import { Auth, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Firestore, collection, query, where, getDocs, doc, setDoc } from '@angular/fire/firestore';
 import { MessageService } from './message.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  signupUsers: any[] = [];
-  signupEmail: any[] = [];
-  loggedInUser: any = null;
-  db = getDatabase();
 
   constructor(
     private fireauth: Auth,
+    private firestore: Firestore,
     private messageService: MessageService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private _platformId: object
-  ) {
-    this.loadSignupUsers();
-    if (isPlatformBrowser(this._platformId)) {
-      const localdata = localStorage.getItem('signupUsers');
-      this.signupUsers = localdata ? JSON.parse(localdata) : [];
-    }
-  }
+    private router: Router
+  ) {}
 
   registerUser(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.fireauth, email, password)
+    return createUserWithEmailAndPassword(this.fireauth, email, password);
   }
+
   loginUser(email: string, password: string) {
-    return signInWithEmailAndPassword(this.fireauth, email, password)
+    return signInWithEmailAndPassword(this.fireauth, email, password);
   }
 
   googleSignIn = () => {
@@ -46,79 +36,44 @@ export class AuthService {
   }
 
   logout(): void {
-    this.loggedInUser = null;
-    if (isPlatformBrowser(this._platformId)) {
-      localStorage.removeItem('username');
+    signOut(this.fireauth).then(() => {
       this.router.navigate(['/']);
-      signOut(this.fireauth)
-    }
-
-  }
-
-  private loadSignupUsers(): void {
-    const usersRef = ref(this.db, 'signupUsers');
-    get(usersRef).then(snapshot => {
-      if (snapshot.exists()) {
-        this.signupUsers = snapshot.val();
-      } else {
-        console.log('No signup users available');
-      }
-    }).catch(error => {
-      console.error('Error loading signup users:', error);
+    }).catch((error) => {
+      console.error('Error during sign-out:', error);
     });
   }
-
-  private saveSignupUsers(): void {
-    set(ref(this.db, 'signupUsers'), this.signupUsers)
-      .catch(error => console.error('Error saving signup users:', error));
-    if (isPlatformBrowser(this._platformId)) {
-      localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-    }
-  }
-
-  signUp(user: any): boolean {
-    if (this.isValidSignUp(user)) {
-      user.profileImage = '../../../assets/user.avif';
-      this.signupUsers.push(user);
-      this.saveSignupUsers();
-      this.messageService.showMessage('Account created successfully', 'success');
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getLoggedInUser(): string | null {
-    if (isPlatformBrowser(this._platformId)) {
-      return localStorage.getItem('username');
+  
+  async getLoggedInUser(email: string): Promise<string | null> {
+    const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        return doc.data()['userName'];
     }
     return null;
-  }
+}
 
-  getProfileImage(): string {
-    const username = this.getLoggedInUser();
-    if (username) {
-      const user = this.signupUsers.find(u => u.userName === username);
-      return user?.profileImage || '../../../assets/user.avif';
+  async getProfileImage(email: string): Promise<string> {
+    const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      return doc.data()['profileImage'] || '../../../assets/user.avif'; 
     }
     return '../../../assets/user.avif';
   }
+  
+  // async setProfileImage(email: string, image: string): Promise<void> {
+  //   const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
+  //   const querySnapshot = await getDocs(q);
+  //   if (!querySnapshot.empty) {
+  //     const docRef = doc(this.firestore, 'signup', querySnapshot.docs[0].id);
+  //     await setDoc(docRef, { profileImage: image }, { merge: true });
+  //   }
+  // }
 
-  setProfileImage(image: string): void {
-    const username = this.getLoggedInUser();
-    if (username) {
-      const user = this.signupUsers.find(u => u.userName === username);
-      if (user) {
-        user.profileImage = image;
-        this.saveSignupUsers();
-      }
-    }
-  }
-
-  private saveLoginState(username: string): void {
-    if (isPlatformBrowser(this._platformId)) {
-      localStorage.setItem('username', username);
-    }
+  getLoggedInUserEmail(): string | null {
+    return 'user@example.com';
   }
 
   private isValidSignUp(user: any): boolean {

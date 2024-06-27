@@ -9,7 +9,7 @@ export class SharedService {
   constructor(private authService: AuthService, private firestore: Firestore) {}
 
   private getUserCartDoc() {
-    const username = this.authService.getLoggedInUser();
+    const username = this.authService.getLoggedInUser('');
     return username ? doc(this.firestore, `cartItems/${username}`) : null;
   }
 

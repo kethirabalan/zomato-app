@@ -2,77 +2,88 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-nav-bar2',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './nav-bar2.component.html',
   styleUrls: ['./nav-bar2.component.scss']
 })
 export class NavBar2Component implements OnInit {
-  username: string | null = null;
+  userName: string | null = null;
   isLoggedIn: boolean = false;
   profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
   cartItems: any[] = [];
   cartItemsCount: number = 0;
+  name:any
 
   constructor(private authService: AuthService,
-    private router: Router) {
-    this.profileImgSrc = this.authService.getProfileImage();
-  }
+              private router: Router, private fire:FirestoreService) {}
 
   ngOnInit(): void {
     this.loadUser();
     this.loadProfileImage();
+    this.fire.getData().subscribe((res:any)=>{
+    this.name = res;
+    console.log(this.name);
+    
+   })
+    
   }
 
   loadUser(): void {
-    const storedUsername = this.authService.getLoggedInUser();
-    if (storedUsername) {
-      this.username = storedUsername;
-      this.isLoggedIn = true;
+    const email = this.authService.getLoggedInUserEmail();
+    if (email) {
+      this.authService.getLoggedInUser(email).then((userName) => {
+        if (userName) {
+          this.userName = userName;
+          this.isLoggedIn = true;
+        }
+      });
     }
   }
 
   loadProfileImage(): void {
-    const storedProfileImg = this.authService.getProfileImage();
-    if (storedProfileImg) {
-      this.profileImgSrc = storedProfileImg;
+    const email = this.authService.getLoggedInUserEmail(); // Modify this to get the logged-in user's email
+    if (email) {
+      this.authService.getProfileImage(email).then((profileImg) => {
+        if (profileImg) {
+          this.profileImgSrc = profileImg;
+        }
+      });
     }
   }
 
-
-
-  logout() {
+  logout(): void {
     this.authService.logout();
-    this.username = null;
+    this.userName = null;
     this.isLoggedIn = false;
     this.router.navigate(['/']); // Redirect to login page after logout
   }
 
-  editprofile() {
-    const editProfileModal = new window.bootstrap.Modal(
+  editprofile(): void {
+    const editProfileModal = new (window as any).bootstrap.Modal(
       document.getElementById('editProfileModal')
     );
     editProfileModal.show();
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         const base64Image = reader.result as string;
         this.profileImgSrc = base64Image; // Update the profile image in the UI
-        this.authService.setProfileImage(base64Image); // Save to Firebase Realtime Database
+        // this.authService.setProfileImage(base64Image); // Save to Firestore
       };
       reader.readAsDataURL(file);
     }
   }
 
-
-  updateProfile() {
+  updateProfile(): void {
     // Additional logic to update the profile details can be added here
   }
 }
