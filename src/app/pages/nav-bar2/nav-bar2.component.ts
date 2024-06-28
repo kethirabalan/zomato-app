@@ -15,46 +15,40 @@ export class NavBar2Component implements OnInit {
   userName: string | null = null;
   isLoggedIn: boolean = false;
   profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
-  cartItems: any[] = [];
-  cartItemsCount: number = 0;
-  name:any
 
-  constructor(private authService: AuthService,
-              private router: Router, private fire:FirestoreService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUser();
     this.loadProfileImage();
-    this.fire.getData().subscribe((res:any)=>{
-    this.name = res;
-    console.log(this.name);
-    
-   })
-    
   }
 
   loadUser(): void {
-    const email = this.authService.getLoggedInUserEmail();
-    if (email) {
-      this.authService.getLoggedInUser(email).then((userName) => {
-        if (userName) {
-          this.userName = userName;
-          this.isLoggedIn = true;
-        }
-      });
-    }
+    this.authService.getLoggedInUserEmail().then((email) => {
+      if (email) {
+        // Assuming AuthService does not have getLoggedInUser method, so using email directly
+        this.userName = email; // Example usage, replace with actual logic to get user's name
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
   }
 
-  loadProfileImage(): void {
-    const email = this.authService.getLoggedInUserEmail(); // Modify this to get the logged-in user's email
-    if (email) {
-      this.authService.getProfileImage(email).then((profileImg) => {
+ async loadProfileImage(): Promise<void> {
+    try {
+      const email = await this.authService.getLoggedInUserEmail();
+      if (email) {
+        const profileImg = await this.authService.getProfileImage(email);
         if (profileImg) {
           this.profileImgSrc = profileImg;
         }
-      });
+      }
+    } catch (error) {
+      console.error('Error loading profile image:', error);
     }
   }
+
 
   logout(): void {
     this.authService.logout();
@@ -63,7 +57,7 @@ export class NavBar2Component implements OnInit {
     this.router.navigate(['/']); // Redirect to login page after logout
   }
 
-  editprofile(): void {
+  editProfile(): void {
     const editProfileModal = new (window as any).bootstrap.Modal(
       document.getElementById('editProfileModal')
     );

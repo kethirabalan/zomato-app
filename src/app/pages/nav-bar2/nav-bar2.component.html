@@ -15,10 +15,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
         <div class="d-flex ms-auto">
-          <!-- <div *ngIf="!isLoggedIn">
+          <div *ngIf="!isLoggedIn">
             <button class="btn btn-primary login" routerLink="/">Login</button>
-          </div> -->
-          <!-- <div class="user" *ngIf="isLoggedIn"> -->
+          </div>
+          <div class="user" *ngIf="isLoggedIn">
             <div class="btn-group">
               <img class="profileimg" [src]="profileImgSrc" alt="User Image">
               <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-dismiss="dropdown" aria-expanded="false">
@@ -27,7 +27,7 @@
               <ul class="dropdown-menu">
                 <div>
                   <li><a class="dropdown-item" href="#editProfile" data-bs-toggle="modal"
-                      data-bs-target="#editProfileModal" data-bs-dismiss="modal" (click)="editprofile()">
+                      data-bs-target="#editProfileModal" data-bs-dismiss="modal" (click)="editProfile()">
                       <img class="imagelist" src="../../../assets/user-avatar.png" alt="Editprofile"> Edit Profile</a>
                   </li>
                 </div>
@@ -35,7 +35,7 @@
                       src="../../../assets/log-out.png" data-bs-dismiss="editProfileModal" alt="logout"> Logout</a></li>
               </ul>
             </div>
-          <!-- </div> -->
+          </div>
           <div>
             <img class="cart-icon" routerLink="/checkout" src="../../../assets/cart.png" alt="Cart">
           </div>

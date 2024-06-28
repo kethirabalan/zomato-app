@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, doc, updateDoc } from '@angular/fire/firestore';
-import { collection } from '@angular/fire/firestore';
-import { addDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, collectionGroup, deleteDoc, doc, docSnapshots, getDoc,  getDocs, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, getStorage, ref, uploadBytesResumable, uploadString, uploadBytes, listAll } from '@angular/fire/storage';
 
 @Injectable({
@@ -32,7 +30,7 @@ export class FirestoreService {
 
   getData(){
     const itemCollection = collection(this.firestore,'signup');
-   return collectionData(itemCollection)
+   return collectionData(itemCollection, {idField:'id'})
 
   }
 

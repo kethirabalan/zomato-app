@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBar2Component } from '../nav-bar2/nav-bar2.component';
 import { PdfGeneratorService } from '../../services/pdf-generator.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-checkout',
@@ -21,6 +22,7 @@ export class CheckoutComponent implements OnInit {
   promoCodeApplied: boolean = false;
   promoDiscount: number = 0;
   cartItems: any[] = [];
+  itemId: string | null = null;
   cartItemRemoved: boolean = false;
 
 
@@ -47,19 +49,23 @@ export class CheckoutComponent implements OnInit {
     'SAVE15': 15
   };
 
-  constructor(private sharedService: SharedService, private pdfGenerator: PdfGeneratorService) {}
+  constructor(private sharedService: SharedService, private pdfGenerator: PdfGeneratorService, private firestore: FirestoreService,) {}
 
   ngOnInit(): void {
     this.loadCartItems();
   }
 
-  async loadCartItems(): Promise<void> {
+  async loadCartItems(){
     try {
       this.cartItems = await this.sharedService.getCartItems();
       this.calculateTotalPrice();
     } catch (error) {
       console.error('Error loading cart items:', error);
     }
+  }
+ 
+  deletecartItem(itemId: any) {
+    this.sharedService.deleteCartItem(itemId);
   }
 
   calculateTotalPrice(): void {
@@ -81,27 +87,27 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  async removeFromCart(index: number): Promise<void> {
-    if (index >= 0 && index < this.cartItems.length) {
-      const item = this.cartItems[index];
-      this.cartItems.splice(index, 1);
-      this.calculateTotalPrice(); // Recalculate total price after removal
+  // async removeFromCart(index: number): Promise<void> {
+  //   if (index >= 0 && index < this.cartItems.length) {
+  //     const item = this.cartItems[index];
+  //     this.cartItems.splice(index, 1);
+  //     this.calculateTotalPrice(); // Recalculate total price after removal
 
-      // Display danger alert for item removal
-      this.cartItemRemoved = true;
-      setTimeout(() => {
-        this.cartItemRemoved = false;
-      }, 3000); // Hide message after 3 seconds
+  //     this.cartItemRemoved = true;
+  //     setTimeout(() => {
+  //       this.cartItemRemoved = false;
+  //     }, 3000); 
+  //     try {
+  //       await this.sharedService.deleteCartItem(item);
+  //     } catch (error) {
+  //       console.error('Error removing item from cart:', error);
+  //     }
+  //   }
+  // }
 
-      try {
-        await this.sharedService.removeItemFromCart(item);
-      } catch (error) {
-        console.error('Error removing item from cart:', error);
-      }
-    }
-  }
 
   onSubmit() {
     this.pdfGenerator.generatePdf(this.formData);
   }
 }
+

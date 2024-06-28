@@ -79,9 +79,9 @@
             </div>
             <form (ngSubmit)="login()" class="layout">
                 <app-message></app-message>
-                <div class="form-group mt-3 mb-3 instyle">
+                <div class="form-group mt-1 instyle">
                     <label for="loginemail">Email:</label>
-                    <div class="input-group mt-3">
+                    <div class="input-group">
                         <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                         <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email"
                             [(ngModel)]="loginObj.email" required>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn text-light bg-danger bt" id="login">
-                        <i class="bi bi-door-open"></i> Login</button>
+                        <i class="bi bi-door-open" data-bs-dismiss="Modal" ></i> Login</button>
                 </div>
                 <div class="line-container mt-2">
                     <div class="line"></div>

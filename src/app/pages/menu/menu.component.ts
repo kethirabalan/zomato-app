@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,6 +17,8 @@ export class MenuComponent {
   selectedCategory = 'All';
 
   cartItemAdded: boolean = false;
+  command:string=''
+  posts:any
 
   menuItems = [
     { title: 'California Pizza',shop:'Oyalo Pizza', category: 'Pizza', location: 'Tirunelveli', price: 525.00, image: 'assets/menu-1.jpg' },
@@ -26,25 +29,31 @@ export class MenuComponent {
     { title: 'Spring Rolls', shop:'Ibaco', category: 'Burger', location: 'Tirunelveli', price: 425.00, image: 'assets/menu-6.jpg' }
   ];
 
-  constructor(private sharedService: SharedService, private router: Router) {}
+  constructor(private sharedService: SharedService, private router: Router, private firestore: FirestoreService,) {}
+
+  ngOnInit(): void {
+    //   this.firestore.getData().subscribe((res:any)=>{
+    //   this.posts = res;
+    // })
+  }
 
   addAndShowMessage(item: any) {
-    // Call your existing function to add item to cart
     this.addtocart(item);
-
-    // Display success message
     this.cartItemAdded = true;
     setTimeout(() => {
       this.cartItemAdded = false;
-    }, 3000); // Hide message after 3 seconds
+    }, 3000); //
   }
 
-  addtocart(item: any) {
-    this.sharedService.setItem(item);
-    console.log('Adding item to cart:', item);
-    // Example: You might have HTTP calls or local storage updates here
+  async addtocart(item: any) {
+    try {
+      await this.sharedService.addCartItems(item);
+      console.log('Adding item to cart:', item);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
   }
-
+  
   get filteredMenuItems() {
     if (this.selectedCategory === 'All') {
       return this.menuItems;
@@ -55,4 +64,10 @@ export class MenuComponent {
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
+  
+  // updateForm(postId:any){
+  //   this.firestore.command =this.command;
+  //   this.firestore.updateDoc(postId);
+  // }
+
 }

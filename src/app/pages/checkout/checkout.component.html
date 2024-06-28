@@ -13,7 +13,7 @@
         <ul class="list-group mb-3">
           <li *ngFor="let item of cartItems" class="list-group-item d-flex justify-content-between lh-sm">
             <span>
-              <a type="button" class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item)" ><i class="bi bi-trash"></i></a>
+              <a type="button" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash" (click)="deletecartItem(item)"></i></a>
             </span>
             <div class="shop">
               <h6 class="my-0">{{ item.title }}</h6>

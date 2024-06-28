@@ -12,9 +12,8 @@ export class AuthService {
   constructor(
     private fireauth: Auth,
     private firestore: Firestore,
-    private messageService: MessageService,
     private router: Router
-  ) {}
+  ) { }
 
   registerUser(email: string, password: string) {
     return createUserWithEmailAndPassword(this.fireauth, email, password);
@@ -24,7 +23,7 @@ export class AuthService {
     return signInWithEmailAndPassword(this.fireauth, email, password);
   }
 
-  googleSignIn = () => {
+  googleSignIn() {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.fireauth, provider)
       .then((result) => {
@@ -42,38 +41,29 @@ export class AuthService {
       console.error('Error during sign-out:', error);
     });
   }
-  
-  async getLoggedInUser(email: string): Promise<string | null> {
-    const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        return doc.data()['userName'];
-    }
-    return null;
-}
+
+  async getLoggedInUserEmail(): Promise<string | null> {
+    const user = this.fireauth.currentUser;
+    return user ? user.email : null;
+  }
 
   async getProfileImage(email: string): Promise<string> {
     const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
-      return doc.data()['profileImage'] || '../../../assets/user.avif'; 
+      return doc.data()['profileImage'] || '../../../assets/user.avif';
     }
     return '../../../assets/user.avif';
   }
-  
-  // async setProfileImage(email: string, image: string): Promise<void> {
-  //   const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
-  //   const querySnapshot = await getDocs(q);
-  //   if (!querySnapshot.empty) {
-  //     const docRef = doc(this.firestore, 'signup', querySnapshot.docs[0].id);
-  //     await setDoc(docRef, { profileImage: image }, { merge: true });
-  //   }
-  // }
 
-  getLoggedInUserEmail(): string | null {
-    return 'user@example.com';
+  async setProfileImage(email: string, image: string): Promise<void> {
+    const q = query(collection(this.firestore, 'signup'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const docRef = doc(this.firestore, 'signup', querySnapshot.docs[0].id);
+      await setDoc(docRef, { profileImage: image }, { merge: true });
+    }
   }
 
   private isValidSignUp(user: any): boolean {
@@ -85,17 +75,17 @@ export class AuthService {
     );
   }
 
-  private isValidEmail(email: any): boolean {
+  private isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  private isValidPhone(phone: any): boolean {
+  private isValidPhone(phone: string): boolean {
     const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phone);
   }
 
-  private isValidPassword(password: any): boolean {
+  private isValidPassword(password: string): boolean {
     return password.length >= 8;
   }
 }

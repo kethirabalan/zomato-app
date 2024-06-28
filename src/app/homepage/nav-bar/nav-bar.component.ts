@@ -119,7 +119,6 @@ export class NavBarComponent implements OnInit {
       reader.onload = () => {
         const base64Image = reader.result as string;
         this.profileImgSrc = base64Image; // Update the profile image in the UI
-        // this.authService.setProfileImage(base64Image); // Save to Firestore
       };
       reader.readAsDataURL(file);
     }
