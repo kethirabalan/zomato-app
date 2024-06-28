@@ -29,23 +29,20 @@ export class PdfGeneratorService {
     // Payment Information
     doc.text("Payment Information", 10, 130);
     doc.text(`Payment Method: ${data.payment_method}`, 10, 140);
-    doc.text(`Name on Card: ${data.cc_name}`, 10, 150);
-    doc.text(`Credit Card Number: ${data.cc_number}`, 10, 160);
-    doc.text(`Expiration: ${data.cc_expiration}`, 10, 170);
-    doc.text(`CVV: ${data.cc_cvv}`, 10, 180);
 
-    // Cart Items
-    doc.text("Cart Items", 10, 200);
-    let y_position = 210;
-    data.cart_items.forEach((item: any) => {
-      doc.text(`Item: ${item.title}, Shop: ${item.shop}, Price: ${item.price} INR`, 10, y_position);
-      y_position += 10;
-    });
+    if (data.cart_items && Array.isArray(data.cart_items)) {
+      // Cart Items
+      doc.text("Cart Items", 10, 130);
+      let y_position = 140;
+      data.cart_items.forEach((item: any) => {
+        doc.text(`Item: ${item.title}, Shop: ${item.shop}, Price: ${item.price} INR`, 10, y_position);
+        y_position += 10;
+      });
+    }
 
-    // Promo Code and Total Price
-    doc.text(`Promo Code: ${data.promo_code} (-${data.promo_discount} INR)`, 10, y_position + 10);
-    doc.text(`Total Price: ${data.total_price} INR`, 10, y_position + 20);
+    doc.text(`Promo Code: ${data.promo_code} (-${data.promo_discount} INR)`, 10, 200);
+  doc.text(`Total Price: ${data.total_price} INR`, 10, 210);
 
-    doc.save('checkout_details.pdf');
+  doc.save('checkout_details.pdf');
   }
 }

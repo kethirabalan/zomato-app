@@ -36,12 +36,19 @@ export class CheckoutComponent implements OnInit {
     country: '',
     state: '',
     zip: '',
-    cart_items: '',
-    promo_code: '',
-    promo_discount: '',
-    total_price: ''
+    same_address: false,
+    save_info: false,
+    payment_method: 'Credit card',
+    cc_name: '',
+    cc_number: '',
+    cc_expiration: '',
+    cc_cvv: '',
+    cart_items: [], // Initialize as an empty array
+    promo_code: 'SUMMER21',
+    promo_discount: 0,
+    total_price: 0
   };
-
+  
 
   validPromoCodes: { [key: string]: number } = {
     'EXAMPLECODE': 5,
