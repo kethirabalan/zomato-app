@@ -26,15 +26,16 @@ export class NavBar2Component implements OnInit {
   loadUser(): void {
     this.authService.getLoggedInUserEmail().then((email) => {
       if (email) {
-        // Assuming AuthService does not have getLoggedInUser method, so using email directly
-        this.userName = email; // Example usage, replace with actual logic to get user's name
+        // Extract the part before the "@" in the email
+        const username = email.split('@')[0];
+        this.userName = username; // Use the extracted username
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
       }
     });
   }
-
+  
  async loadProfileImage(): Promise<void> {
     try {
       const email = await this.authService.getLoggedInUserEmail();

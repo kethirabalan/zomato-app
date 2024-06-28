@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
 import { FirestoreService } from '../../services/firestore.service';
+import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu',
@@ -29,7 +31,7 @@ export class MenuComponent {
     { title: 'Spring Rolls', shop:'Ibaco', category: 'Burger', location: 'Tirunelveli', price: 425.00, image: 'assets/menu-6.jpg' }
   ];
 
-  constructor(private sharedService: SharedService, private router: Router, private firestore: FirestoreService,) {}
+  constructor(private sharedService: SharedService, private router: Router, private firestore: FirestoreService,private authService: AuthService, private snackBar: MatSnackBar,) {}
 
   ngOnInit(): void {
     //   this.firestore.getData().subscribe((res:any)=>{
@@ -37,20 +39,25 @@ export class MenuComponent {
     // })
   }
 
-  addAndShowMessage(item: any) {
-    this.addtocart(item);
-    this.cartItemAdded = true;
-    setTimeout(() => {
-      this.cartItemAdded = false;
-    }, 3000); //
-  }
-
-  async addtocart(item: any) {
+  async addAndShowMessage(item: any) {
     try {
-      await this.sharedService.addCartItems(item);
-      console.log('Adding item to cart:', item);
+      const userEmail = await this.authService.getLoggedInUserEmail();
+      if (userEmail) {
+        this.sharedService.addCartItems(item);
+        this.cartItemAdded = true;
+        this.snackBar.open('Item added to cart successfully!', 'Close', {
+          duration: 3000,
+        });
+        setTimeout(() => {
+          this.cartItemAdded = false;
+        }, 3000);
+      } else {
+        this.snackBar.open('Please log in to add items to the cart.', 'Close', {
+          duration: 3000,
+        });
+      }
     } catch (error) {
-      console.error('Error adding item to cart:', error);
+      console.error('Error fetching logged-in user email:', error);
     }
   }
   

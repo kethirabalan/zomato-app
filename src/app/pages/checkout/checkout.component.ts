@@ -94,23 +94,23 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // async removeFromCart(index: number): Promise<void> {
-  //   if (index >= 0 && index < this.cartItems.length) {
-  //     const item = this.cartItems[index];
-  //     this.cartItems.splice(index, 1);
-  //     this.calculateTotalPrice(); // Recalculate total price after removal
+  async removeFromCart(index: number): Promise<void> {
+    if (index >= 0 && index < this.cartItems.length) {
+      const item = this.cartItems[index];
+      this.cartItems.splice(index, 1);
+      this.calculateTotalPrice(); // Recalculate total price after removal
 
-  //     this.cartItemRemoved = true;
-  //     setTimeout(() => {
-  //       this.cartItemRemoved = false;
-  //     }, 3000); 
-  //     try {
-  //       await this.sharedService.deleteCartItem(item);
-  //     } catch (error) {
-  //       console.error('Error removing item from cart:', error);
-  //     }
-  //   }
-  // }
+      this.cartItemRemoved = true;
+      setTimeout(() => {
+        this.cartItemRemoved = false;
+      }, 3000); 
+      try {
+        await this.sharedService.deleteCartItem(item);
+      } catch (error) {
+        console.error('Error removing item from cart:', error);
+      }
+    }
+  }
 
 
   onSubmit() {
