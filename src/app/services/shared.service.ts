@@ -45,11 +45,11 @@ export class SharedService {
     return [];
   }
 
-  async deleteCartItem(itemId: string) {
+  async deleteCartItem(item: any) {
     const userDocRef = this.getUserCartDoc();
     if (userDocRef) {
       const cartItems = await this.getCartItems();
-      const updatedCartItems = cartItems.filter(item => item.id !== itemId);
+      const updatedCartItems = cartItems.filter(cartItem => cartItem.title !== item.title);
       await setDoc(userDocRef, { cartItems: updatedCartItems });
     }
   }

@@ -62,7 +62,7 @@ export class CheckoutComponent implements OnInit {
     this.loadCartItems();
   }
 
-  async loadCartItems(){
+  async loadCartItems() {
     try {
       this.cartItems = await this.sharedService.getCartItems();
       this.calculateTotalPrice();
@@ -70,9 +70,21 @@ export class CheckoutComponent implements OnInit {
       console.error('Error loading cart items:', error);
     }
   }
- 
-  deletecartItem(itemId: any) {
-    this.sharedService.deleteCartItem(itemId);
+
+  async deletecartItem(item: any, index: number) {
+    this.cartItems.splice(index, 1);
+    this.calculateTotalPrice();
+
+    this.cartItemRemoved = true;
+    setTimeout(() => {
+      this.cartItemRemoved = false;
+    }, 3000);
+
+    try {
+      await this.sharedService.deleteCartItem(item);
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
   }
 
   calculateTotalPrice(): void {
@@ -93,6 +105,7 @@ export class CheckoutComponent implements OnInit {
       this.calculateTotalPrice();
     }
   }
+
 
   async removeFromCart(index: number): Promise<void> {
     if (index >= 0 && index < this.cartItems.length) {

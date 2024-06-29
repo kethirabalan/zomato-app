@@ -31,13 +31,9 @@ export class MenuComponent {
     { title: 'Spring Rolls', shop:'Ibaco', category: 'Burger', location: 'Tirunelveli', price: 425.00, image: 'assets/menu-6.jpg' }
   ];
 
-  constructor(private sharedService: SharedService, private router: Router, private firestore: FirestoreService,private authService: AuthService, private snackBar: MatSnackBar,) {}
+  constructor(private sharedService: SharedService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar,) {}
 
-  ngOnInit(): void {
-    //   this.firestore.getData().subscribe((res:any)=>{
-    //   this.posts = res;
-    // })
-  }
+  ngOnInit(): void {}
 
   async addAndShowMessage(item: any) {
     try {
@@ -47,6 +43,7 @@ export class MenuComponent {
         this.cartItemAdded = true;
         this.snackBar.open('Item added to cart successfully!', 'Close', {
           duration: 3000,
+          panelClass: ['success-snackbar'],
         });
         setTimeout(() => {
           this.cartItemAdded = false;
@@ -54,12 +51,18 @@ export class MenuComponent {
       } else {
         this.snackBar.open('Please log in to add items to the cart.', 'Close', {
           duration: 3000,
+          panelClass: ['error-snackbar'],
         });
       }
     } catch (error) {
       console.error('Error fetching logged-in user email:', error);
+      this.snackBar.open('An error occurred. Please try again.', 'Close', {
+        duration: 3000,
+        panelClass: ['error-snackbar'],
+      });
     }
   }
+  
   
   get filteredMenuItems() {
     if (this.selectedCategory === 'All') {
@@ -71,10 +74,4 @@ export class MenuComponent {
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
-  
-  // updateForm(postId:any){
-  //   this.firestore.command =this.command;
-  //   this.firestore.updateDoc(postId);
-  // }
-
 }

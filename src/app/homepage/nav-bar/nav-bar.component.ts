@@ -30,7 +30,7 @@ export class NavBarComponent implements OnInit {
   };
 
   progress: any
-  profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
+  profileImgSrc: string = '../../../assets/user.avif';
   userLocation: string = '';
   loginSuccess = false;
   loginError = false;
@@ -86,8 +86,11 @@ export class NavBarComponent implements OnInit {
     const email = this.signupObj.email;
     const password = this.signupObj.password;
     this.authService.registerUser(email, password)
-      .then((res: any) => {
-        this.firestore.addsignup(this.signupObj);
+      .then(async (res: any) => {
+        if (this.imageUrl) {
+          this.signupObj.profileImageUrl = this.imageUrl; // Save profile image URL
+        }
+        await this.firestore.addsignup(this.signupObj);
         this.messageService.showMessage('Account created successfully', 'success');
         console.log('signup success');
         setTimeout(() => {
@@ -125,14 +128,13 @@ export class NavBarComponent implements OnInit {
     try {
       const image = await this.firestore.imageUpload(event);
       console.log(image);
-      this.imageUrl = this.imageUrl.concat(image);
+      this.imageUrl = image; // Update with the correct image URL
       console.log(this.imageUrl);
-    }
-    catch (error) {
-      console.error('image upload as some problem', error);
+    } catch (error) {
+      console.error('image upload encountered a problem', error);
     }
   }
-
+  
   async onSave() {
     if (this.signupObj.valid) {
       console.log(this.signupObj.value);

@@ -1,4 +1,4 @@
-// @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap");
 
 /* Define your custom variables */
 $primary-color: #007bff;
@@ -15,18 +15,29 @@ body {
 
     .nav-link {
         color: $primary-color;
-        
+
         &:hover {
             color: darken($primary-color, 10%);
         }
     }
-    
+
     .nav-link.active {
         background-color: $primary-color;
         color: #fff;
         margin-left: 14px;
     }
 }
+
+.success-snackbar {
+    background-color: green;
+    color: white;
+}
+
+.error-snackbar {
+    background-color: red;
+    color: white;
+}
+
 
 .menu-item {
     border: 1px solid $menu-item-border;
@@ -55,7 +66,7 @@ body {
         .btn-menu {
             background-color: $primary-color;
             color: #fff;
-            
+
             &:hover {
                 background-color: darken($primary-color, 10%);
             }

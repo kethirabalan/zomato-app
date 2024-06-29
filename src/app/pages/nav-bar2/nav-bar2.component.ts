@@ -15,8 +15,10 @@ export class NavBar2Component implements OnInit {
   userName: string | null = null;
   isLoggedIn: boolean = false;
   profileImgSrc: string = '../../../assets/user.avif'; // Default profile image
+  selectedFile!: File;
 
-  constructor(private authService: AuthService, private router: Router) {}
+
+  constructor(private authService: AuthService, private router: Router,  private firestore: FirestoreService,) {}
 
   ngOnInit(): void {
     this.loadUser();
@@ -26,9 +28,8 @@ export class NavBar2Component implements OnInit {
   loadUser(): void {
     this.authService.getLoggedInUserEmail().then((email) => {
       if (email) {
-        // Extract the part before the "@" in the email
         const username = email.split('@')[0];
-        this.userName = username; // Use the extracted username
+        this.userName = username;
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
@@ -36,13 +37,13 @@ export class NavBar2Component implements OnInit {
     });
   }
   
- async loadProfileImage(): Promise<void> {
+  async loadProfileImage(): Promise<void> {
     try {
       const email = await this.authService.getLoggedInUserEmail();
       if (email) {
-        const profileImg = await this.authService.getProfileImage(email);
-        if (profileImg) {
-          this.profileImgSrc = profileImg;
+        const userDoc = await this.firestore.getUserByEmail(email);
+        if (userDoc && userDoc.profileImageUrl) {
+          this.profileImgSrc = userDoc.profileImageUrl;
         }
       }
     } catch (error) {
@@ -54,7 +55,6 @@ export class NavBar2Component implements OnInit {
   logout(): void {
     this.authService.logout();
     this.userName = null;
-    this.isLoggedIn = false;
     this.router.navigate(['/']); // Redirect to login page after logout
   }
 
@@ -66,19 +66,32 @@ export class NavBar2Component implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {
         const base64Image = reader.result as string;
-        this.profileImgSrc = base64Image; // Update the profile image in the UI
-        // this.authService.setProfileImage(base64Image); // Save to Firestore
+        this.profileImgSrc = base64Image;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  updateProfile(): void {
-    // Additional logic to update the profile details can be added here
+  async updateProfile(): Promise<void> {
+    if (!this.selectedFile) {
+      console.warn('No file selected');
+      return;
+    }
+
+    try {
+      const email = await this.authService.getLoggedInUserEmail();
+      if (email) {
+        const downloadUrl = await this.firestore.imageUpload({ target: { files: [this.selectedFile] } });
+        await this.firestore.updateUserProfile(email, downloadUrl[0]);
+        console.log('Profile updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   }
 }
